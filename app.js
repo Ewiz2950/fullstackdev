@@ -1,8 +1,9 @@
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
 const exphbs = require('express-handlebars');
 const createError = require('http-errors');
+const flash = require('connect-flash');
+var session = require('express-session');
 
 // connecting app routes
 var indexRouter = require('./routes/index');
@@ -10,28 +11,30 @@ var indexRouter = require('./routes/index');
 
 var app = express();
 const hbs = exphbs.create({
-  extname      : '.hbs',
-  layoutsDir   : path.join(__dirname, 'views', 'layouts'),
-  defaultLayout: 'main',
-  helpers      : path.join(__dirname, 'helpers'),
-  partialsDir  : [
-    path.join(__dirname, 'views', 'partials')
-  ]
+  extname : '.hbs'
 });
 
 // view engine setup
 app.engine('hbs', hbs.engine);
-app.set('view engine', 'hbs')
+app.set('view engine', 'hbs');
+
+app.use(session({
+	key: 'app_session',
+	secret: 'secret',
+	resave: false,
+	saveUninitialized: false,
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash());
+app.use(express.static(path.join(__dirname, 'dist', 'public')));
 app.use('/bootstrap', express.static(path.join(__dirname, "node_modules", 
-        "bootstrap-icons", "font")));
+                                              "bootstrap-icons", "font")));
 
 
 app.use('/', indexRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

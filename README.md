@@ -6,7 +6,21 @@
 - express-handlebars
 - bootstrap
 - popper.js
-- bootstrap icons
+- bootstrap-icons
+- express-session
+- path
+
+- gulp
+ - gulp-handlebars
+ - gulp-uglify
+ - gulp-uglifycss
+ - gulp-nodemon
+ - gulp-wrap
+ - merge-stream
+ - gulp-concat
+ - gulp-declare
+
+
 # setting up
 ```shell
 git clone https://github.com/Ewiz2950/fullstackdev.git
