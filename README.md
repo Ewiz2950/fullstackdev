@@ -37,6 +37,8 @@ gulp
 
 # templates usage
 ```js
+// importing in the file containing all the precompiled templates
+var templates = require('../dist/views/templates.js')
 /* templates.main() returns the precompiled base template 
 we are passing in the required precompiled template into the
 body section {{body}} as declared in main.hbs */
