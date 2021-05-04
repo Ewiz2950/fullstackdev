@@ -1,4 +1,4 @@
-# fullstackdev test by KJasasasa
+# fullstackdev
 
 # dependencies
 - nodejs
