@@ -26,6 +26,8 @@
 git clone https://github.com/Ewiz2950/fullstackdev.git
 cd <project folder name>
 npm install
+#  To use gulp commands in terminal
+npm install -g gulp
 ```
 # launching
 
