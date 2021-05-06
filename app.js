@@ -1,6 +1,5 @@
 var express = require('express');
 var path = require('path');
-const exphbs = require('express-handlebars');
 const createError = require('http-errors');
 const flash = require('connect-flash');
 var session = require('express-session');
@@ -13,13 +12,6 @@ var indexRouter = require('./routes/index');
 
 
 var app = express();
-const hbs = exphbs.create({
-  extname : '.hbs'
-});
-
-// view engine setup
-app.engine('hbs', hbs.engine);
-app.set('view engine', 'hbs');
 
 app.use(session({
 	key: 'app_session',
