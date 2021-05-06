@@ -5,6 +5,9 @@ const createError = require('http-errors');
 const flash = require('connect-flash');
 var session = require('express-session');
 
+// register helpers
+var helpers = require('./dist/helpers/helpers');
+
 // connecting app routes
 var indexRouter = require('./routes/index');
 
