@@ -49,6 +49,22 @@ function compileTemplates() {
     .pipe(gulp.dest('dist/views/'));
 };
 
+function registerHelpers() {
+  return gulp.src('helpers/*.js')
+    .pipe(wrap('var Handlebars = require("handlebars");\nHandlebars.registerHelper(<%= processHelperName(file.relative) %>, <%= contents %>)', {}, {
+      imports: {
+        processHelperName: function(fileName) {
+          // Strip the extension and the underscore
+          // Escape the output with JSON.stringify
+          return JSON.stringify(path.basename(fileName, '.js'));
+        }
+      }
+    }))
+    .pipe(concat('helpers.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('dist/helpers/'))
+};
+
 function minifyCss() {
   return gulp.src('src/public/css/*.css')
     .pipe(uglifycss())
@@ -74,6 +90,7 @@ gulp.task('nodemon', async function() {
     ignore: ["dist/", "README"] 
   }).on('restart', function() {
     compileTemplates(), 
+    registerHelpers(),
     minifyCss(), 
     minifyJs(), 
     copyImages()
@@ -82,6 +99,7 @@ gulp.task('nodemon', async function() {
 
 gulp.task('build', async function() {
   compileTemplates();
+  registerHelpers();
   minifyCss();
   minifyJs();
   copyImages();
