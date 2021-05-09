@@ -1,16 +1,15 @@
-# fullstackdev
+# Full Stack Development Project
 
-# dependencies
-- nodejs
-    - express
-    - express-handlebars
-    - bootstrap
-    - popper.js
-    - bootstrap-icons
-    - express-session
-    - path
+# Dependencies
 
-- gulp
+- express
+- bootstrap
+- popper.js
+- bootstrap-icons
+- express-session
+- path
+
+- **gulp**
     - gulp-handlebars
     - gulp-uglify
     - gulp-uglifycss
@@ -21,26 +20,29 @@
     - gulp-declare
 
 
-# setting up
-```shell
+# Setting up
+```bat
 git clone https://github.com/Ewiz2950/fullstackdev.git
 cd <project folder name>
 npm install
 #  To use gulp commands in terminal
 npm install -g gulp
 ```
-# launching
+# Launching
 
-```shell
+```bat
 gulp
 ```
 
-# templates usage
+# Templates usage
 ```js
 // importing in the file containing all the precompiled templates
 var templates = require('../dist/views/templates.js')
+
 /* templates.main() returns the precompiled base template 
 we are passing in the required precompiled template into the
 body section {{body}} as declared in main.hbs */
-templates.main({body: templates.<hbs file name>})
+templates.main({
+    body: templates.<hbs file name>
+    })
 ```
