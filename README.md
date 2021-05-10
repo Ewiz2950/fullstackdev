@@ -46,4 +46,3 @@ templates.main({
     body: templates.<hbs file name>
     })
 ```
-mmm
