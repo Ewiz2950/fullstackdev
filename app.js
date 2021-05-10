@@ -29,6 +29,8 @@ app.use('/bootstrap', express.static(path.join(__dirname, "node_modules",
                                               "bootstrap-icons", "font")));
 
 
+
+                                              
 app.use('/', indexRouter);
 
 
