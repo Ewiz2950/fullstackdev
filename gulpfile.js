@@ -11,7 +11,6 @@ const nodemon = require('gulp-nodemon');
 
 
 function compileTemplates() {
-  // Assume all partials are in a folder such as source/partials/**/*.hbs
   var partials = gulp.src(['src/views/partials/*.hbs'])
     .pipe(handlebars())
     .pipe(wrap('Handlebars.registerPartial(<%= processPartialName(file.relative) %>, Handlebars.template(<%= contents %>));', {}, {
@@ -50,7 +49,7 @@ function compileTemplates() {
 };
 
 function registerHelpers() {
-  return gulp.src('helpers/*.js')
+  return gulp.src('src/helpers/*.js')
     .pipe(wrap('var Handlebars = require("handlebars");\nHandlebars.registerHelper(<%= processHelperName(file.relative) %>, <%= contents %>)', {}, {
       imports: {
         processHelperName: function(fileName) {
