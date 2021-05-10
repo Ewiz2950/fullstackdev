@@ -19,7 +19,7 @@ app.use(session({
 	resave: false,
 	saveUninitialized: false,
 }));
-
+app
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(flash());
