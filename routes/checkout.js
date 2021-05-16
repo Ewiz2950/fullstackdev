@@ -10,13 +10,4 @@ router.get('/', function (req, res, next) {
 
     res.send(templates.main(data));
 });
-
-//Checkout page
-router.get('/checkout', (req, res) => {
-	res.render('checkout',{
-        text: 'haha epic'
-    });
-});
-
-
 module.exports = router;
