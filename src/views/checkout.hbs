@@ -48,7 +48,8 @@
             <input class="form-control" type="text" maxlength="19" id="ccnum" name="cardnumber" placeholder="Example: 1111-2222-3333-4444"required>
             
             <label for="expmonth">Exp Month</label>
-            <input class="form-control" min="1" max="12"type="number" id="expmonth" name="expmonth" required>
+            <input class="form-control" <input class="form-control" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            min="1" max="12" maxlength="2" pattern="\d*"type="number" id="expmonth" name="expmonth" required>
             
             <div class="row">
               <div class="col-50">
@@ -59,7 +60,7 @@
               <div class="col-50">
                 <label for="cvv">CVV</label>
                 <input class="form-control" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                type="padss" id="cvv" name="cvv" pattern="\d*" maxlength="3" required>
+                type="password" id="cvv" name="cvv" pattern="\d*" maxlength="3" required>
               </div>
             </div>
           </div>
