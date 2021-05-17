@@ -88,11 +88,7 @@ gulp.task('nodemon', async function() {
     ext: 'js,hbs,css',
     ignore: ["dist/", "README"] 
   }).on('restart', function() {
-    compileTemplates(), 
-    registerHelpers(),
-    minifyCss(), 
-    minifyJs(), 
-    copyImages()
+    (gulp.series("build")())
   })
 });
 
