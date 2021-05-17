@@ -6,7 +6,6 @@ var templates = require('../dist/views/templates.js');
 router.get('/', function (req, res, next) {
     var data = {
         body: templates.index(),
-        success_msg: 'succ'
     };
 
     res.send(templates.main(data));

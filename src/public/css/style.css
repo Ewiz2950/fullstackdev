@@ -1,7 +1,94 @@
-body {
-  padding: 50px;
+#indexPage p {
+  font-size: 1.1em !important
 }
 
-p {
-  color: #00B7FF;
+/* Carousel base class */
+#indexPage .carousel {
+  margin-bottom: 4rem;
+}
+
+/* Since positioning the image, we need to help out the caption */
+#indexPage #Carousel .carousel-caption {
+  bottom: 3rem;
+  z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+#indexPage #Carousel .carousel-item {
+  height: 32rem;
+}
+
+#indexPage #Carousel .carousel-item>img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 32rem;
+}
+
+.product-card a:hover {
+  text-decoration: none;
+  color: black
+}
+
+#indexPage .card-body {
+  padding: 0
+}
+
+#indexPage .product-card a {
+  text-decoration: none;
+}
+
+#indexPage .carousel-indicators button {
+  background-color: #999;
+  background-color: rgba(70, 70, 70, 0.25);
+  border-radius: 50%;
+  width:10px;
+  height:10px;
+  margin: 0 0.3rem 0 0.3rem;
+}
+
+#indexPage .carousel-indicators .active {
+  background-color: #444;
+}
+
+@media (max-width: 400px) {
+  #indexPage p {
+    font-size: 1em !important
+  }
+}
+
+@media (max-width: 767px) {
+
+     #indexPage .row {
+      margin: 0.55em !important
+     }
+
+     #indexPage .product-card:nth-last-child(-n+2) {
+       display: none;
+     }
+  }
+
+@media (max-width: 991.5px) {
+  
+  #indexPage .product-card:nth-last-child(1) {
+    display: none;
+  }
+}
+
+@media (max-width: 1200px) {
+  #indexPage .card-body > .btn {
+    font-size: 0.9rem;
+    border: none;
+  }
+
+  .p-5 {
+    padding: 1rem !important
+  }
+}
+
+@media (max-width: 1400px) {
+  .p-5 {
+    padding: 1.6rem !important
+  }
 }
