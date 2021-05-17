@@ -8,7 +8,6 @@
 - bootstrap-icons
 - express-session
 - path
-
 - **gulp**
     - gulp-handlebars
     - gulp-uglify
@@ -25,13 +24,11 @@
 git clone https://github.com/Ewiz2950/fullstackdev.git
 cd <project folder name>
 npm install
-#  To use gulp commands in terminal
-npm install -g gulp
 ```
 # Launching
 
 ```bat
-gulp
+launch.bat
 ```
 
 # Templates usage
@@ -43,6 +40,6 @@ var templates = require('../dist/views/templates.js')
 we are passing in the required precompiled template into the
 body section {{body}} as declared in main.hbs */
 templates.main({
-    body: templates.<hbs file name>
+        body: templates.<hbs file name>
     })
 ```

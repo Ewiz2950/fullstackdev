@@ -9,6 +9,7 @@ var helpers = require('./dist/helpers/helpers');
 
 // connecting app routes
 var indexRouter = require('./routes/index');
+var checkoutRouter = require('./routes/checkout');
 
 
 var app = express();
@@ -32,6 +33,7 @@ app.use('/bootstrap', express.static(path.join(__dirname, "node_modules",
 
                                               
 app.use('/', indexRouter);
+app.use('/checkout', checkoutRouter);
 
 
 // catch 404 and forward to error handler
