@@ -1,12 +1,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="../css/checkout.css">
-<p id="Header">Checkout<br>Page</p>
+<p id="Header">Checkout page</p>
 <div class="row">
   <div class="col-75">
     <div class="container">
       {{!-- When form submitted, transport to here --}}
-      <form action="/" style="checkout.css">
+      <form action="receipt" style="checkout.css">
       
         <div class="row">
           <div class="col-50">
@@ -75,9 +75,10 @@
     <div class="container">
       <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i></span></h4>
       {{!-- Will be currently empty if nothing and have items if something there --}}
-      Currently empty!
+      <p>Thinkpad Laptop - $100</p>
+      <img class="card-img-top p-5" src="/images/laptop.png" id="laptopimage">
       <hr>
-      <p>Total <span class="price" style="color:black"></span></p>
+      <p>Total: $100 <span class="price" style="color:black"></span></p>
       {{!-- Will display nothing if there are no items and will compute total cost if there are items --}}
     </div>
   </div>
