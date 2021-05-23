@@ -1,8 +1,28 @@
 var express = require('express');
+const mysql = require('mysql');
+const dotenv = require('dotenv');
 var path = require('path');
 const createError = require('http-errors');
 const flash = require('connect-flash');
 var session = require('express-session');
+
+dotenv.config({ path: './.env' });
+
+// database:http://localhost/phpmyadmin/
+const db = mysql.createConnection ({
+  host: process.env.DATABASE_HOST,
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE
+});
+
+db.connect( (error) => {
+  if(error) {
+    console.log("MySQL not present")
+  } else {
+    console.log("MYSQL connected!")
+  }
+});
 
 // register helpers
 var helpers = require('./dist/helpers/helpers');
@@ -12,7 +32,9 @@ var indexRouter = require('./routes/index');
 var checkoutRouter = require('./routes/checkout');
 var receiptRouter = require('./routes/receipt');
 var reviewRouter = require('./routes/review');
-
+var loginRouter = require('./routes/login');
+var registerRouter = require('./routes/register');
+const { urlencoded } = require('express');
 
 
 var app = express();
@@ -39,6 +61,8 @@ app.use('/', indexRouter);
 app.use('/checkout', checkoutRouter);
 app.use('/receipt', receiptRouter);
 app.use('/review', reviewRouter);
+app.use('/login', loginRouter);
+app.use('/register', registerRouter);
 
 
 // catch 404 and forward to error handler
