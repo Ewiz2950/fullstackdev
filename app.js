@@ -11,6 +11,8 @@ var helpers = require('./dist/helpers/helpers');
 var indexRouter = require('./routes/index');
 var checkoutRouter = require('./routes/checkout');
 var receiptRouter = require('./routes/receipt');
+var reviewRouter = require('./routes/review');
+
 
 
 var app = express();
@@ -36,6 +38,7 @@ app.use('/bootstrap', express.static(path.join(__dirname, "node_modules",
 app.use('/', indexRouter);
 app.use('/checkout', checkoutRouter);
 app.use('/receipt', receiptRouter);
+app.use('/review', reviewRouter);
 
 
 // catch 404 and forward to error handler

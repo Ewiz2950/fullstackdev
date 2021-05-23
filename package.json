@@ -12,7 +12,9 @@
     "express": "~4.16.1",
     "express-session": "^1.17.1",
     "http-errors": "^1.8.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "react": "^17.0.2",
+    "react-star-rating-component": "^1.4.1"
   },
   "devDependencies": {
     "gulp": "^4.0.2",
