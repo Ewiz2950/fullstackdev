@@ -3,16 +3,18 @@ body {
     font-size: 17px;
     padding: 8px;
   }
-  
   #Header{
-      background-image: url("https://i.imgur.com/7fFIxmq.jpg");
-      height: 130px;
-      text-align: left;
-      padding-left: 20px;
-      font-size: 35px;
-      font-family: sans-serif;
-      color: white;
-  }
+    background-image: url("https://i.imgur.com/7fFIxmq.jpg");
+    height: 130px;
+    text-align: left;
+    padding-left: 20px;
+    font-size: 35px;
+    font-family: sans-serif;
+    color: white;
+}
+#laptopimage{
+  size: 30px;
+}
   
   * {
     box-sizing: border-box;
