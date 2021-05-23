@@ -1,3 +1,27 @@
+/* Navbar */ 
+
+@media (min-width: 991.5px) {
+  .navbar .dropdown-menu {
+    width: 50em !important;
+  }
+}
+
+@media (max-width: 991.5px) {
+  .navbar .navbar-nav {
+    margin-left: 0 !important
+  }
+
+  .navbar .nav-link {
+    padding-left: 0 !important
+  }
+
+  .navbar #dropdownMenuButton1 {
+    padding: 0
+  }
+}
+
+/* Index Page */ 
+
 #indexPage p {
   font-size: 1.1em !important
 }
@@ -43,8 +67,8 @@
   background-color: #999;
   background-color: rgba(70, 70, 70, 0.25);
   border-radius: 50%;
-  width:10px;
-  height:10px;
+  width: 10px;
+  height: 10px;
   margin: 0 0.3rem 0 0.3rem;
 }
 
@@ -60,24 +84,24 @@
 
 @media (max-width: 767px) {
 
-     #indexPage .row {
-      margin: 0.55em !important
-     }
-
-     #indexPage .product-card:nth-last-child(-n+2) {
-       display: none;
-     }
+  #indexPage .row {
+    margin: 0.55em !important
   }
 
+  #indexPage .product-card:nth-last-child(-n+2) {
+    display: none;
+  }
+}
+
 @media (max-width: 991.5px) {
-  
+
   #indexPage .product-card:nth-last-child(1) {
     display: none;
   }
 }
 
 @media (max-width: 1200px) {
-  #indexPage .card-body > .btn {
+  #indexPage .card-body>.btn {
     font-size: 0.9rem;
     border: none;
   }
@@ -88,7 +112,64 @@
 }
 
 @media (max-width: 1400px) {
-  .p-5 {
+  #indexPage .p-5 {
     padding: 1.6rem !important
+  }
+}
+
+/* Product Grid */ 
+
+@media (min-width: 991.5px) {
+  #productGrid .filter-field {
+    min-height: 100vh;
+  }
+
+  #productGrid .collapse:not(.show) {
+    display: block;
+  }
+}
+
+#productGrid .product-card a {
+  text-decoration: none;
+}
+
+@media (max-width: 767px) {
+
+  #productGrid .row {
+    margin: 0.55em !important
+  }
+
+  #productGrid .container {
+    padding: 0
+  }
+}
+
+#productGrid .product-card a {
+  text-decoration: none;
+}
+
+@media (max-width: 1200px) {
+  #productGrid .card-body>.btn {
+    font-size: 0.9rem;
+    border: none;
+  }
+}
+
+/* Product Page */
+
+#productPage .product-card a {
+  text-decoration: none;
+}
+
+@media (max-width: 991.5px) {
+
+  #productPage .product-card:nth-last-child(1) {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  #productPage .product-card:nth-last-child(-n+2) {
+    display: none;
   }
 }

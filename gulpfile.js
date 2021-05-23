@@ -28,7 +28,7 @@ function compileTemplates() {
     }))
     .pipe(wrap('var Handlebars = require("handlebars");\n <%= contents %>'));
 
-    var templates = gulp.src(['src/views/*.hbs', 'src/views/test/**/*.hbs', '!src/views/partials/*.hbs'])
+    var templates = gulp.src(['src/views/*.hbs', 'src/views/**/*.hbs', '!src/views/partials/*.hbs'])
     // Compile each Handlebars template source file to a template function
       .pipe(handlebars())
     // Wrap each template function in a call to Handlebars.template
