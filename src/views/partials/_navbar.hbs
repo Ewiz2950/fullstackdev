@@ -1,17 +1,79 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-primary mb-3">
-	<div class="container">
-		<a class="navbar-brand" href="/">Electroniks</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
-				  aria-expanded="false"
-				  aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav">
-				<li class="nav-item">
-					<a class="nav-link" href="/">Home</a>
-				</li>
-			</ul>
-		</div>
-	</div>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #383838;">
+  <div class="container" style="background-color: #383838;">
+    <a class="navbar-brand" href="/">Logo</a>
+    <button class="navbar-toggler filter-toggle ms-auto d-none" type="button" data-bs-toggle="collapse" data-bs-target="#filterList"
+      aria-controls="filterList" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="bi bi-funnel" style="font-size: 1.7rem;"></i>
+    </button>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          Categories
+        </a>
+        <div class="dropdown-menu category-menu container shadow p-4">
+            <div class="row row-cols-2 row-cols-md-4">
+              <div class="col">
+                <h5 class="px-0"><i class="bi bi-house-door"></i> Household Appliances</h5>
+                <div class="list-group list-group-flush">
+                  <a class="list-group-item" href="#">Fridge</a>
+                  <a class="list-group-item" href="#">Washing Machines</a>
+                  <a class="list-group-item" href="#">Stoves</a>
+                  <a class="list-group-item" href="#">Ovens</a>
+                  <a class="list-group-item" href="#">Fans</a>
+                </div>
+              </div>
+              <div class="col">
+                <h5><i class="bi bi-phone"></i> Mobile &amp; Tablets</h5>
+                <div class="list-group list-group-flush">
+                  <a class="list-group-item" href="#">Mobile Devices</a>
+                  <a class="list-group-item" href="#">Tablets</a>
+                </div>
+              </div>
+              <div class="col">
+                <h5><i class="bi bi-laptop"></i> Laptops &amp; Monitors</h5>
+                <div class="list-group list-group-flush">
+                  <a class="list-group-item" href="#">Laptops</a>
+                  <a class="list-group-item" href="#">Monitors</a>
+                </div>
+              </div>
+              <div class="col">
+                <h5><i class="bi bi-three-dots"></i> Misc</h5>
+                <div class="list-group list-group-flush">
+                  <a class="list-group-item" href="#">TVs &amp; Audio</a>
+                  <a class="list-group-item" href="#">Accessories</a>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <ul class="navbar-nav ms-5 mb-2 mb-lg-0">
+        <li class="nav-item">
+          <form class="d-flex input-group" action="/search">
+            <input class="form-control search-box" type="search" placeholder="Search" aria-label="Search"
+              name="q" style="height:2.5rem;width:70%">
+            <button class="btn btn-primary my-0" type="submit" style="height:2.5rem"><i
+                class="bi bi-search"></i></button>
+          </form>
+        </li>
+      </ul>
+      <a href="/checkout" class="text-light ms-auto" style="text-decoration:none;font-size:1.5rem"><i
+          class="bi bi-cart ms-auto"></i><span class="badge badge-primary"></span></a>
+      <span class="badge rounded-pill bg-light text-dark me-3 ms-1">9</span>
+      <div class="dropdown">
+        <button class="btn dropdown-toggle text-light" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+          aria-expanded="false" style="background-color: #383838;">
+          <i class="bi bi-person" style="font-size: 1.3rem;"></i>
+        </button>
+        <ul class="dropdown-menu shadow" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" href="#">Account</a></li>
+          <li><a class="dropdown-item" href="#">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </nav>
