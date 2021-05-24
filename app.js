@@ -25,7 +25,7 @@ db.connect( (error) => {
 });
 
 // register helpers
-var helpers = require('./dist/helpers/helpers');
+const helpers = require('./dist/helpers/helpers');
 
 // connecting app routes
 var indexRouter = require('./routes/index');
