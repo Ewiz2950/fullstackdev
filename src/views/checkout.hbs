@@ -5,7 +5,7 @@
 <div class="row">
   <div class="col-75">
     <div class="container">
-      {{!-- When form submitted, transport to here --}}
+      {{!-- When fom submitted, transport to here --}}
       <form id="form" action="receipt" style="checkout.css">
       
         <div class="row">
@@ -55,12 +55,12 @@
               <div class="col-50">
                 <label for="expyear">Exp Year*</label>
                 <input class="form-control" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                 pattern="\d*" maxlength="4" type="number" id="expyear" name="expyear" required />
+                 pattern="\d*" minlength="4" maxlength="4" type="number" id="expyear" name="expyear" required />
               </div>
               <div class="col-50">
                 <label for="cvv">CVV*</label>
                 <input class="form-control" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                type="password" id="cvv" name="cvv" pattern="\d*" maxlength="3">
+                type="password" id="cvv" name="cvv" pattern="\d*" minlength="3" maxlength="3" required />
               </div>
             </div>
           </div>
