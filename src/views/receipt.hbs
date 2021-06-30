@@ -1,10 +1,15 @@
-<body>
-<h1>Thank you for your purchase!!</h1>
-<h2>Please check if you billing address is correct</h2>
-<p>Name: Chia Kai Jun</p>
-<p>Email: 202083D@mymail.nyp.edu.sg</p>
-<p>Address: Ang Mo Kio Street 69, Blk106P, #07-212</p>
-<p>Zip: 123456</p>
-<p>Item(s) bought: Thinkpad Laptop</p>
-<p>Total Cost: $100</p>
+<body onload="setData()">
+<p id="name">
+<p id="email">
+Name: <!-- want to display the name here -->
+</p>
+<script>
+function setData(){
+    if(typeof(localStorage) != "undefined"){
+        document.getElementById("name").innerHTML = localStorage.name;
+        document.getElementById("email").innerHTML = localStorage.email;
+        document.getElementById("adr").innerHTML = localStorage.adr;
+        document.getElementById("zip").innerHTML = localStorage.zip;
+}
+</script>
 </body>
