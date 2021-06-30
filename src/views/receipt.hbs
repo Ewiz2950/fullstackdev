@@ -1,8 +1,23 @@
+<style>
+    .yeet{
+        font-size: 25px;
+        line-height: 200%;
+    }
+    .intro{
+        text-align: center;
+    }
+</style>
+<div class="intro">
+<h1>Thank you for your purchase!</h1>
+<h2>Please check that your checkout details are correct</h2>
+</div>
 <body onload="setData()">
-<p id="name">
-<p id="email">
-Name: <!-- want to display the name here -->
-</p>
+<div class="yeet">
+Name: <span id="name"></span><br>
+Email: <span id="email"></span><br>
+Address: <span id="adr"></span><br>
+Zip: <span id="zip"></span><br>
+</div>
 <script>
 function setData(){
     if(typeof(localStorage) != "undefined"){
@@ -10,6 +25,8 @@ function setData(){
         document.getElementById("email").innerHTML = localStorage.email;
         document.getElementById("adr").innerHTML = localStorage.adr;
         document.getElementById("zip").innerHTML = localStorage.zip;
+    }
 }
 </script>
 </body>
+

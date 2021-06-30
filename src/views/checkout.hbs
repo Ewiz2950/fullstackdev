@@ -6,28 +6,28 @@
   <div class="col-75">
     <div class="container">
       {{!-- When form submitted, transport to here --}}
-      <form action="receipt" style="checkout.css">
+      <form id="form" action="receipt" style="checkout.css">
       
         <div class="row">
           <div class="col-50">
             <h3>Billing Address</h3>
             {{!-- Name --}}
-            <label for="name"><i class="fa fa-user"></i>Full Name</label>
-            <input class="form-control" type="text" placeholder="Example: Chia Kai Jun" id="name" required>
+            <label for="name"><i class="fa fa-user"></i> Full Name*</label>
+            <input class="form-control" type="text" placeholder="Example: Chia Kai Jun" id="name" required />
 
-            <label for="email"><i class="fa fa-envelope"></i> Email</label>
-            <input class="form-control" type="email" id="email" placeholder="Example: john@example.com" required><br>
+            <label for="email"><i class="fa fa-envelope"></i> Email*</label>
+            <input class="form-control" type="email" id="email" placeholder="Example: john@example.com" required />
             
-            <label for="adr"><i class="fa fa-address-card-o"></i> Address (Street, Block, Unit Number)</label>
-            <input class="form-control" type="text" id="adr" name="address" placeholder="Example: Ang Mo Kio Street 69, Blk106P, #07-212" required>
+            <label for="adr"><i class="fa fa-address-card-o"></i> Address (Street, Block, Unit Number)*</label>
+            <input class="form-control" type="text" id="adr" name="address" placeholder="Example: Ang Mo Kio Street 69, Blk106P, #07-212" required />
 
             <div class="row">
               <div class="col-50">
-                <label for="zip">Zip</label>
+                <label for="zip">Zip*</label>
                 <input class="form-control" 
                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                 {{!-- Javascript code needed here to prevent using text --}}
-                pattern="\d*" maxlength="6" type="number" id="zip" name="zip" placeholder="Example: 123456" required>
+                pattern="\d*" maxlength="6" type="number" id="zip" name="zip" placeholder="Example: 123456" required />
               </div>
             </div>
           </div>
@@ -41,33 +41,33 @@
               <i class="fa fa-cc-mastercard" style="color:red;"></i>
             </div>
             
-            <label for="cname">Name on Card</label>
-            <input class="form-control" type="text" id="cname" name="cardname" required>
+            <label for="cname">Name on Card*</label>
+            <input class="form-control" type="text" id="cname" name="cardname" required />
             
-            <label for="ccnum">Credit card number</label>
-            <input class="form-control" type="text" maxlength="19" id="ccnum" name="cardnumber" placeholder="Example: 1111-2222-3333-4444"required>
+            <label for="ccnum">Credit card number*</label>
+            <input class="form-control" type="text" maxlength="19" id="ccnum" name="cardnumber" placeholder="Example: 1111-2222-3333-4444"required />
             
-            <label for="expmonth">Exp Month</label>
+            <label for="expmonth">Exp Month*</label>
             <input class="form-control" <input class="form-control" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-            min="1" max="12" maxlength="2" pattern="\d*"type="number" id="expmonth" name="expmonth" required>
+            min="1" max="12" maxlength="2" pattern="\d*"type="number" id="expmonth" name="expmonth" required />
             
             <div class="row">
               <div class="col-50">
-                <label for="expyear">Exp Year</label>
+                <label for="expyear">Exp Year*</label>
                 <input class="form-control" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                 pattern="\d*" maxlength="4" type="number" id="expyear" name="expyear" required>
+                 pattern="\d*" maxlength="4" type="number" id="expyear" name="expyear" required />
               </div>
               <div class="col-50">
-                <label for="cvv">CVV</label>
+                <label for="cvv">CVV*</label>
                 <input class="form-control" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                type="password" id="cvv" name="cvv" pattern="\d*" maxlength="3" required>
+                type="password" id="cvv" name="cvv" pattern="\d*" maxlength="3">
               </div>
             </div>
           </div>
           
         </div>
         {{!-- Will link to thank you for purchase, but now link to base for testing --}}
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" onclick="submitForm()">Submit</button><span id="hi">* - Must be filled in</span>
       </form>
     </div>
   </div>
@@ -83,3 +83,21 @@
     </div>
   </div>
 </div>
+<script>
+function submitForm(){
+  let name = document.forms["form"]["name"].value;
+  let email = document.forms["form"]["email"].value;
+  let address = document.forms["form"]["address"].value;
+  let zip = document.forms["form"]["zip"].value;
+  if (name == "") and (email == "") and (address == "") and (zip == ""){
+    return false;
+  }
+  else if(typeof(localStorage) != "undefined"){
+    localStorage.name = document.getElementById("name").value;
+    localStorage.email = document.getElementById("email").value;
+    localStorage.adr = document.getElementById("adr").value;
+    localStorage.zip = document.getElementById("zip").value;
+  }
+  document.getElementById("form").submit();
+}
+</script>
