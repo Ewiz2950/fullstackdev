@@ -1,8 +1,27 @@
-/* Navbar */ 
+/* Global */
+.head {
+  font-weight: 400;
+}
+
+/* Navbar */
 
 @media (min-width: 991.5px) {
   .navbar .dropdown-menu {
     width: 50em !important;
+  }
+
+  .navbar .category {
+    height: 20%;
+  }
+}
+
+@media (min-width: 1400px) {
+  .navbar .dropdown-menu {
+    width: 63.3em !important;
+  }
+
+  .navbar .category {
+    height: 15%;
   }
 }
 
@@ -17,6 +36,12 @@
 
   .navbar #dropdownMenuButton1 {
     padding: 0
+  }
+}
+
+@media (min-width: 767px) {
+  .search-box {
+    width: 30rem !important
   }
 }
 
@@ -172,6 +197,20 @@
   #productPage .product-card:nth-last-child(-n+2) {
     display: none;
   }
+}
+
+/* Staff Dashboard */
+
+/* Add Product */
+#addProduct input[type="file"] {
+  display: none
+}
+
+#addProduct .custom-file-upload {
+  background-image: url('../images/addimage.jpg');
+  width: 224px;
+  height: 153px;
+  cursor: pointer;
 }
 
 /* The Modal (background) */

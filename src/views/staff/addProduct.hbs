@@ -1,0 +1,71 @@
+<main id="addProduct">
+    <div class="container px-0">
+        <div class="row my-4">
+            <h4>Add Product</h4>
+        </div>
+        <form action="" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-lg-8 mb-5">
+                    <div class="rounded border p-4">
+                        <label for="productName" class="form-label head">Name</label>
+                        <input type="text" class="form-control mb-3" id="productName">
+                        <input type="file" id="productImage" class="imageUpload" name="mainImage"
+                            accept="image/png, image/jpeg" multiple>
+                        <div class="row g-0">
+                            <label for="productImage" class="custom-file-upload imageUpload border rounded me-3 mb-3"></label>
+                            <label for="productImage" class="custom-file-upload imageUpload border rounded me-3 mb-3"></label>
+                            <label for="productImage" class="custom-file-upload imageUpload border rounded me-3 mb-3"></label>
+                        </div>
+                        <div id="imageUpload" class="form-text"></div>
+                        <label for="description" class="form-label head mt-3">Description</label>
+                        <textarea class="form-control mb-3" id="description" rows="5" style="resize:none"></textarea>
+                        <label for="productBrand" class="form-label head">Brand</label>
+                        <input type="text" class="form-control mb-3" id="productBrand">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="productPrice" class="form-label head">Price</label>
+                                <input type="number" class="form-control mb-3" id="productPrice" step="0.05" min="1">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="promotion" class="form-label head">Promotion</label>
+                                <select class="form-select mb-3" id="promotion">
+                                    <option selected value="Featured">Featured</option>
+                                    <option value="New Arrival">New Arrival</option>
+                                    <option value="Best Seller">Best Seller</option>
+                                    <option value="Popular Product">Popular Product</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="category" class="form-label head">Category</label>
+                                <select class="form-select mb-3" id="category">
+                                    <option selected value="Household Appliances">Household Appliances</option>
+                                    <option value="Mobile & Tablets">Mobile &amp; Tablets</option>
+                                    <option value="Laptops & Monitors">Laptops &amp; Monitors</option>
+                                    <option value="Misc">Misc</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="subCategory" class="form-label head">Subcategory</label>
+                                <select class="form-select" id="subCategory"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="variants" id="variantList">
+                    <div class="rounded border p-3 mb-4">
+                        <div class="row">
+                            <h5 class="col" style="padding-top:0.375rem">Variants</h5>
+                            <button class="col btn btn-link text-end border-0" id="addVariant">Add Variant</button>
+                        </div>
+                    </div>
+                </div>
+                <a href="" class="btn btn-primary float-end"></i> Add Product</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>

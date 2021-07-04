@@ -4,8 +4,8 @@
       <div class="col-12 col-lg-2 p-2">
         <div class="navbar-collapse collapse filter-field border rounded" id="filterList">
           <form id="form" method="get">
-            <div class="bg-white p-2">
-              <span>Sort By</span>
+            <div class="bg-white p-3">
+              <span class="head">Sort By</span>
               <div class='sort mb-4 form-group'>
                 <select class="form-select p-0" id="sort" name="sort" style="border:1px solid #ccc !important;">
                   <option selected value="">Relevancy</option>
@@ -15,9 +15,9 @@
                   <option name="ZA" value='ZA'>Brand(Z to A)</option>
                 </select>
               </div>
-              <p>Filter By</p>
+              <p class="head">Filter By</p>
               <div class="brand mt-2">
-                <p>Brand</p>
+                <p class="head">Brand</p>
                 <div class="filter overflow-auto" id="brand-list"
                   style="max-height:7rem; border-bottom: 1px solid #e3e3e3;">
                   <ul class="p-0 list-unstyled brands">
@@ -25,7 +25,7 @@
                 </div>
               </div>
               <div class="promotion mt-2">
-                <p>Promotion</p>
+                <p class="head">Promotion</p>
                 <div class='filter rounded'>
                   <ul class="p-0 list-unstyled">
                     <li><input name="promotion" type='checkbox' value="F" /> Featured</li>
@@ -43,7 +43,11 @@
       <div class="col" id="results">
         <div class="container">
           <div class="row mt-4">
-            <h4>Results for "Laptop"</h4>
+            {{#if category}}
+            <h4>{{{category}}}</h4>
+            {{else if search}}
+            <h4>Results for '{{{search}}}'</h4>
+            {{/if}}
           </div>
           <div class="row g-0 row-cols-2 row-cols-xs-1 row-cols-md-3 row-cols-lg-4">
             <div class="product-card col">
