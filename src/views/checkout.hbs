@@ -46,16 +46,11 @@
             
             <label for="ccnum">Credit card number*</label>
             <input class="form-control" type="text" maxlength="19" id="ccnum" name="cardnumber" placeholder="Example: 1111-2222-3333-4444"required />
-            
-            <label for="expmonth">Exp Month* (1-12)</label>
-            <input class="form-control" <input class="form-control" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-            min="1" max="12" maxlength="2" pattern="\d*"type="number" id="expmonth" name="expmonth" required />
-            
+                        
             <div class="row">
               <div class="col-50">
-                <label for="expyear">Exp Year*</label>
-                <input class="form-control" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                 pattern="\d*" minlength="4" maxlength="4" type="number" id="expyear" name="expyear" required />
+                <label for="expyear">Exp Month and Year*</label>
+                <input class="form-control" type="month" id="expyear" name="expyear" required />
               </div>
               <div class="col-50">
                 <label for="cvv">CVV*</label>
@@ -75,10 +70,10 @@
     <div class="container">
       <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i></span></h4>
       {{!-- Will be currently empty if nothing and have items if something there --}}
-      <p>Thinkpad Laptop - $100</p>
+      <p id="item">Thinkpad Laptop - $100</p>
       <img class="card-img-top p-5" src="/images/laptop.png" id="laptopimage">
       <hr>
-      <p>Total: $100 <span class="price" style="color:black"></span></p>
+      <p id="price" value="$100">Total: $100 <span class="price" style="color:black"></span></p>
       {{!-- Will display nothing if there are no items and will compute total cost if there are items --}}
     </div>
   </div>
