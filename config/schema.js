@@ -3,8 +3,8 @@ let createProduct = `CREATE TABLE IF NOT EXISTS product (
                         name VARCHAR (255) NOT NULL, 
                         description VARCHAR (1000) NOT NULL,
                         price DECIMAL (10,2) NOT NULL,
-                        listed BOOLEAN SET DEFAULT true;
-                     )`
+                        listed BOOL DEFAULT true NOT NULL
+                     )`;
 
 let createImage = `CREATE TABLE IF NOT EXISTS image (
                         variant_id VARCHAR(36) NOT NULL, 
