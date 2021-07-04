@@ -1,4 +1,5 @@
 const Product = require("../models/product.model.js");
+const { v4: uuidv4 } = require('uuid');
 
 exports.create = (req, res) => {
     // Validate request

@@ -14,8 +14,8 @@ Image.create = (image, result) => {
       result(err, null);
       return;
     }
-    console.log("created image: ", { id: res.id, image });
-    result(null, { id: res.id, name: res.name, description: res.description, price: res.price });
+    console.log("created image: ", { productId: res.productId, variantId: res.variantId, name: res.name });
+    result(null, { productId: res.productId, variantId: res.variantId, name: res.name });
   });
 };
 

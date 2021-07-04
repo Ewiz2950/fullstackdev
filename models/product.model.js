@@ -18,7 +18,7 @@ Product.create = (product, result) => {
       result(err, null);
       return;
     }
-    console.log("created product: ", { id: res.id, product });
+    console.log("created product: ", { id: res.id, name: res.name, description: res.description, price: res.price });
     result(null, { id: res.id, name: res.name, description: res.description, price: res.price });
   });
 };

@@ -14,8 +14,8 @@ Variant.create = (variant, result) => {
       result(err, null);
       return;
     }
-    console.log("created variant: ", { id: res.id, variant });
-    result(null, { id: res.id, name: res.name, description: res.description, price: res.price });
+    console.log("created variant: ", { id: res.id, productId: res.productId, name: res.name });
+    result(null, { id: res.id, productId: res.productId, name: res.name });
   });
 };
 
