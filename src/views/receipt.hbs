@@ -10,7 +10,8 @@
 </style>
 <div class="intro">
 <h1>Thank you for your purchase!</h1>
-<h2>Please check that your checkout details are correct</h2>
+<h2>Please check that your checkout details are correct.</h2>
+<h2>Please also take a screenshot of this page.</h2>
 </div>
 <body onload="setData()">
 <div class="yeet">
@@ -18,16 +19,31 @@ Name: <span id="name"></span><br>
 Email: <span id="email"></span><br>
 Address: <span id="adr"></span><br>
 Zip: <span id="zip"></span><br>
+Credit Card Name: <span id="cname"></span><br>
+Credit Card Number: <span id="ccnum"></span><br>
+Credit Card expiring Year and Month: <span id="expyear"></span><br>
+Item: <span id="item"></span>
 </div>
+<form action="http://localhost:5000/">
+<button type="submit" onclick="test()">Click here to continue shopping</button>
+</form>
 <script>
-function setData(){
+    function setData(){
     if(typeof(localStorage) != "undefined"){
         document.getElementById("name").innerHTML = localStorage.name;
         document.getElementById("email").innerHTML = localStorage.email;
         document.getElementById("adr").innerHTML = localStorage.adr;
         document.getElementById("zip").innerHTML = localStorage.zip;
+        document.getElementById("cname").innerHTML = localStorage.cname;
+        document.getElementById("ccnum").innerHTML = localStorage.ccnum;
+        document.getElementById("expyear").innerHTML = localStorage.expyear;
+        document.getElementById("item").innerHTML = localStorage.item;
+
     }
 }
+    function test(){
+        localStorage.clear();
+    }
 </script>
 </body>
 

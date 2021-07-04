@@ -4,9 +4,9 @@
 <p id="Header">Checkout page</p>
 <div class="row">
   <div class="col-75">
-    <div class="container">
+    <div class="containeer">
       {{!-- When fom submitted, transport to here --}}
-      <form id="form" action="receipt" style="checkout.css">
+      <form id="form" method="GET" action="receipt" style="checkout.css">
       
         <div class="row">
           <div class="col-50">
@@ -31,7 +31,6 @@
               </div>
             </div>
           </div>
-
           <div class="col-50">
             <h3>Payment</h3>
             {{!-- Available credit cards to use with image --}}
@@ -42,7 +41,7 @@
             </div>
             
             <label for="cname">Name on Card*</label>
-            <input class="form-control" type="text" id="cname" name="cardname" required />
+            <input class="form-control" type="text" id="cname" name="cname" required />
             
             <label for="ccnum">Credit card number*</label>
             <input class="form-control" type="text" maxlength="19" id="ccnum" name="cardnumber" placeholder="Example: 1111-2222-3333-4444"required />
@@ -63,14 +62,14 @@
         </div>
         {{!-- Will link to thank you for purchase, but now link to base for testing --}}
         <button type="submit" class="btn btn-primary" onclick="submitForm()">Submit</button><span id="hi">* - Must be filled in</span>
-      </form>
     </div>
   </div>
+  </form>
   <div class="col-25">
     <div class="container">
       <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i></span></h4>
       {{!-- Will be currently empty if nothing and have items if something there --}}
-      <p id="item">Thinkpad Laptop - $100</p>
+      <p id="item" value="thing">Thinkpad Laptop - $100</p>
       <img class="card-img-top p-5" src="/images/laptop.png" id="laptopimage">
       <hr>
       <p id="price" value="$100">Total: $100 <span class="price" style="color:black"></span></p>
@@ -79,20 +78,17 @@
   </div>
 </div>
 <script>
-function submitForm(){
-  let name = document.forms["form"]["name"].value;
-  let email = document.forms["form"]["email"].value;
-  let address = document.forms["form"]["address"].value;
-  let zip = document.forms["form"]["zip"].value;
-  if (name == "") and (email == "") and (address == "") and (zip == ""){
-    return false;
-  }
-  else if(typeof(localStorage) != "undefined"){
-    localStorage.name = document.getElementById("name").value;
-    localStorage.email = document.getElementById("email").value;
-    localStorage.adr = document.getElementById("adr").value;
-    localStorage.zip = document.getElementById("zip").value;
-  }
-  document.getElementById("form").submit();
+  function submitForm(){
+    if(typeof(localStorage) != "undefined"){
+        localStorage.name = document.getElementById("name").value;
+        localStorage.email = document.getElementById("email").value;
+        localStorage.adr = document.getElementById("adr").value;
+        localStorage.zip = document.getElementById("zip").value;
+        localStorage.cname = document.getElementById("cname").value;
+        localStorage.ccnum = document.getElementById("ccnum").value;
+        localStorage.expyear = document.getElementById("expyear").value;
+        localStorage.item = document.getElementById("item").value;
+    }
+    document.getElementById("form").submit();
 }
 </script>
