@@ -8,6 +8,9 @@
 - bootstrap-icons
 - express-session
 - path
+- sequelize
+- mysql2
+- dotenv
 - **gulp**
     - gulp-handlebars
     - gulp-uglify
