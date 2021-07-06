@@ -29,6 +29,7 @@ Credit Card Name: <span id="cname"></span><br>
 Credit Card Number: <span id="ccnum"></span><br>
 Credit Card expiring Year and Month: <span id="expyear"></span><br>
 Item: <span id="item"></span>
+Total: <span id="total"></span>
 </div>
 <form action="http://localhost:5000/">
 <button id="button" type="submit" onclick="test()">Click here to continue shopping</button>
@@ -44,6 +45,7 @@ Item: <span id="item"></span>
         document.getElementById("ccnum").innerHTML = localStorage.ccnum;
         document.getElementById("expyear").innerHTML = localStorage.expyear;
         document.getElementById("item").innerHTML = localStorage.item;
+        document.getElementById("total").innerHTML = localStorage.total;
 
     }
 }

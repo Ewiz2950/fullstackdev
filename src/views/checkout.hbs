@@ -72,7 +72,8 @@
       <input class="form-control" type="text" id="item" name="item" value="Thinkpad Laptop - $100" readonly></input>
       <img class="card-img-top p-5" src="/images/laptop.png" id="laptopimage">
       <hr>
-      <p id="price" value="$100">Total: $100 <span class="price" style="color:black"></span></p>
+      <h4>Total</h4>
+      <input class="form-control" type="text" id="total" name="total" value="$100" style="color:black" readonly></input>
       {{!-- Will display nothing if there are no items and will compute total cost if there are items --}}
     </div>
   </div>
@@ -102,6 +103,7 @@
         localStorage.ccnum = document.getElementById("ccnum").value;
         localStorage.expyear = document.getElementById("expyear").value;
         localStorage.item = document.getElementById("item").value;
+        localStorage.total = document.getElementById("total").value;
     }
     document.getElementById("form").submit();
 }
