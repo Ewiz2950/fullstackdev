@@ -26,4 +26,15 @@ let createVariant = `CREATE TABLE IF NOT EXISTS variant (
                         PRIMARY KEY (variant_id, product_id)
                      )`
 
-module.exports = {createProduct, createVariant, createImage};
+let createReceipt = `CREATE TABLE IF NOT EXISTS receipt (
+                        name VARCHAR(30) PRIMARY KEY NOT NULL,
+                        email VARCHAR(50) NOT NULL,
+                        adr VARCHAR(60) NOT NULL,
+                        zip VARCHAR(6) NOT NULL,
+                        cname VARCHAR(30) NOT NULL,
+                        ccnum VARCHAR(19) NOT NULL,
+                        item VARCHAR(30) NOT NULL,
+                        total VARCHAR(10) NOT NULL
+)`
+
+module.exports = {createProduct, createVariant, createImage, createReceipt};

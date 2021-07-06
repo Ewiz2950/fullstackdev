@@ -7,6 +7,12 @@
     .intro{
         text-align: center;
     }
+    #button{
+        font-size: 25px;
+        position: absolute;
+        bottom: 5%;
+        left: 38%;
+    }
 </style>
 <div class="intro">
 <h1>Thank you for your purchase!</h1>
@@ -23,9 +29,10 @@ Credit Card Name: <span id="cname"></span><br>
 Credit Card Number: <span id="ccnum"></span><br>
 Credit Card expiring Year and Month: <span id="expyear"></span><br>
 Item: <span id="item"></span>
+Total: <span id="total"></span>
 </div>
 <form action="http://localhost:5000/">
-<button type="submit" onclick="test()">Click here to continue shopping</button>
+<button id="button" type="submit" onclick="test()">Click here to continue shopping</button>
 </form>
 <script>
     function setData(){
@@ -38,6 +45,7 @@ Item: <span id="item"></span>
         document.getElementById("ccnum").innerHTML = localStorage.ccnum;
         document.getElementById("expyear").innerHTML = localStorage.expyear;
         document.getElementById("item").innerHTML = localStorage.item;
+        document.getElementById("total").innerHTML = localStorage.total;
 
     }
 }

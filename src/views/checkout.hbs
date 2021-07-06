@@ -27,7 +27,7 @@
                 <input class="form-control" 
                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                 {{!-- Javascript code needed here to prevent using text --}}
-                pattern="\d*" maxlength="6" type="number" id="zip" name="zip" placeholder="Example: 123456" required />
+                pattern="\d*" minlength="6" maxlength="6" type="number" id="zip" name="zip" placeholder="Example: 123456" required />
               </div>
             </div>
           </div>
@@ -44,7 +44,7 @@
             <input class="form-control" type="text" id="cname" name="cname" required />
             
             <label for="ccnum">Credit card number*</label>
-            <input class="form-control" type="text" maxlength="19" id="ccnum" name="cardnumber" placeholder="Example: 1111-2222-3333-4444"required />
+            <input class="form-control" type="text" minlength="19" maxlength="19" id="ccnum" name="cardnumber" placeholder="Example: 1111-2222-3333-4444"required />
                         
             <div class="row">
               <div class="col-50">
@@ -69,16 +69,31 @@
     <div class="container">
       <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i></span></h4>
       {{!-- Will be currently empty if nothing and have items if something there --}}
-      <p id="item" value="thing">Thinkpad Laptop - $100</p>
+      <input class="form-control" type="text" id="item" name="item" value="Thinkpad Laptop - $100" readonly></input>
       <img class="card-img-top p-5" src="/images/laptop.png" id="laptopimage">
       <hr>
-      <p id="price" value="$100">Total: $100 <span class="price" style="color:black"></span></p>
+      <h4>Total</h4>
+      <input class="form-control" type="text" id="total" name="total" value="$100" style="color:black" readonly></input>
       {{!-- Will display nothing if there are no items and will compute total cost if there are items --}}
     </div>
   </div>
 </div>
 <script>
   function submitForm(){
+    var name = document.forms["form"]["name"].value;
+    var email = document.forms["form"]["email"].value;
+    var adr = document.forms["form"]["adr"].value;
+    var zip = document.forms["form"]["zip"].value;
+    var cname = document.forms["form"]["cname"].value;
+    var ccnum = document.forms["form"]["ccnum"].value;
+    var expyear = document.forms["form"]["expyear"].value;
+    var cvv = document.forms["form"]["cvv"].value;
+    if (name == null || name == "", email == null || email == "", adr == null || adr == "", 
+    zip == null || zip == "", cname == null || cname == "", ccnum == null || ccnum == "", 
+    expyear == null || expyear == "", cvv == null || cvv == "") {
+      return false;
+    }
+    
     if(typeof(localStorage) != "undefined"){
         localStorage.name = document.getElementById("name").value;
         localStorage.email = document.getElementById("email").value;
@@ -88,6 +103,7 @@
         localStorage.ccnum = document.getElementById("ccnum").value;
         localStorage.expyear = document.getElementById("expyear").value;
         localStorage.item = document.getElementById("item").value;
+        localStorage.total = document.getElementById("total").value;
     }
     document.getElementById("form").submit();
 }
