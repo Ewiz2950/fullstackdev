@@ -77,6 +77,7 @@ function addVariant(number) {
     input.setAttribute("type", "text");
     input.setAttribute("class", "form-control mb-3 imageUpload" + number);
     input.setAttribute("id", "variantName" + number);
+    input.setAttribute("name", "variantName" + number);
     var inputFile = document.createElement('input');
     inputFile.setAttribute("type", "file");
     inputFile.setAttribute("id", "variantImage" + number);

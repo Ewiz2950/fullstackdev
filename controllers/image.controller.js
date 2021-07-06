@@ -1,30 +1,32 @@
 const Image = require("../models/image.model.js");
 
 exports.create = (req, res) => {
-    // Validate request
-    if (!req.body) {
-      res.status(400).send({
-        message: "Content can not be empty!"
-      });
-    }
-  
-    // Create a Image
-    const image = new Image({
-      productId: req.body.productId,
-      variantId: req.body.variantId,
-      name: req.body.image,
-    });
-  
-    // Save Image in the database
-    Image.create(image, (err, data) => {
-      if (err)
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while creating the Image."
-        });
-      else res.send(data);
-    });
+  if (!req) {
+    return new Promise((resolve, reject) => {reject('Empty content.')})
   };
+
+  let promises = [];
+
+  for (variantName in req) {
+    req[variantName].images.forEach(imageName => {
+      promises.push(new Promise((resolve, reject) => {
+        // Create a Image
+        const image = new Image({
+          image: imageName,
+          variant_id: req[variantName].variant_id,
+          product_id: req.main.product_id
+        });
+        
+        // Save Image in the database
+        Image.create(image, (err, data) => {
+          if (err) reject(err)
+          else resolve();
+        });
+      }))
+    })
+  };
+  return Promise.all(promises);
+}
 
 // Find a single Image with imageId and variantId
 exports.findOne = (req, res) => {

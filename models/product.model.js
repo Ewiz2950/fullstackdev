@@ -2,7 +2,7 @@ const connection = require('../config/connection.js')
 
 // constructor
 const Product = function(product) {
-  this.id = product.id;
+  this.product_id = product.product_id;
   this.name = product.name;
   this.description = product.description;
   this.price = product.price;
@@ -18,8 +18,8 @@ Product.create = (product, result) => {
       result(err, null);
       return;
     }
-    console.log("created product: ", { id: res.id, name: res.name, description: res.description, price: res.price });
-    result(null, { id: res.id, name: res.name, description: res.description, price: res.price });
+    console.log("created product: ", { id: product.product_id, name: product .name });
+    result(null, res);
   });
 };
 

@@ -1,43 +1,37 @@
 const Product = require("../models/product.model.js");
-const { v4: uuidv4 } = require('uuid');
 
-exports.create = (req, res) => {
-    // Validate request
-    if (!req.body) {
-        res.status(400).send({
-            message: "Content can not be empty!"
+exports.create = (req) => {
+    
+    return new Promise((resolve, reject) => {
+        // Validate request
+        if (!req) {
+            reject("Empty content.")
+        }
+        // Create a Product
+        const product = new Product({
+            product_id: req.main.product_id,
+            name: req.main.name,
+            description: req.main.description,
+            price: req.main.price,
+            category: req.main.category,
+            subCategory: req.main.subCategory,
+            promotion: req.main.promotion
         });
-    }
 
-    // Create a Product
-    const product = new Product({
-        id: uuidv4(),
-        name: req.body.name,
-        description: req.body.description,
-        price: req.body.price,
-        category: req.body.category,
-        subCategory: req.body.subCategory,
-        promotion: req.body.promotion
-    });
-
-    // Save Product in the database
-    Product.create(product, (err, data) => {
-        if (err)
-            res.status(500).send({
-                message: err.message || "Some error occurred while creating the Product."
-            });
-        else res.send(data);
-    });
+        // Save Product in the database
+        Product.create(product, (err, data) => {
+            if (err) reject(err)
+            else resolve()
+        })
+    })
 };
 
 // Retrieve all Products from the database.
 exports.findAll = (req, res) => {
     Product.getAll((err, data) => {
-        if (err)
-            res.status(500).send({
-                message: err.message || "Some error occurred while retrieving products."
-            });
-        else res.send(data);
+        if (err) {
+            return (err)
+        } else return(data);
     });
 };
 
@@ -46,25 +40,17 @@ exports.findOne = (req, res) => {
     Product.findById(req.params.productId, (err, data) => {
         if (err) {
             if (err.status === "not_found") {
-                res.status(404).send({
-                    message: `Product with id ${req.params.productId} not found.`
-                });
-            } else {
-                res.status(500).send({
-                    message: "Error retrieving Product with id " + req.params.productId
-                });
-            }
-        } else res.send(data);
+                return `Product with id ${req.params.productId} not found.`;
+            } else return (err)
+        } else return(data);
     });
 };
 
 // Update a Product identified by the productId in the request
 exports.update = (req, res) => {
     // Validate Request
-    if (!req.body) {
-        res.status(400).send({
-            message: "Content can not be empty!"
-        });
+    if (!req) {
+        return "Content can not be empty."
     }
 
     Product.updateById(
@@ -73,15 +59,9 @@ exports.update = (req, res) => {
         (err, data) => {
             if (err) {
                 if (err.status === "not_found") {
-                    res.status(404).send({
-                        message: `Product with id ${req.params.productId} not found.`
-                    });
-                } else {
-                    res.status(500).send({
-                        message: "Error updating Product with id " + req.params.productId
-                    });
-                }
-            } else res.send(data);
+                    return `Product with id ${req.params.productId} not found.`;
+                } else return (err)
+            } else return(data);
         }
     );
 };

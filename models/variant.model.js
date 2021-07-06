@@ -2,8 +2,8 @@ const connection = require('../config/connection.js')
 
 // constructor
 const Variant = function(variant) {
-  this.id = variant.id;
-  this.productId = variant.productId;
+  this.variant_id = variant.variant_id;
+  this.product_id = variant.product_id;
   this.name = variant.name;
 };
 
@@ -14,8 +14,8 @@ Variant.create = (variant, result) => {
       result(err, null);
       return;
     }
-    console.log("created variant: ", { id: res.id, productId: res.productId, name: res.name });
-    result(null, { id: res.id, productId: res.productId, name: res.name });
+    console.log("created variant: ", { id: variant.variant_id, productId: variant.product_id, name: variant.name });
+    result(null, res);
   });
 };
 
@@ -40,3 +40,5 @@ Variant.findById = (productId, variantId, result) => {
     result({ status: "not_found" }, null);
   });
 };
+
+module.exports = Variant;
