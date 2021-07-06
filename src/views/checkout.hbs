@@ -27,7 +27,7 @@
                 <input class="form-control" 
                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                 {{!-- Javascript code needed here to prevent using text --}}
-                pattern="\d*" maxlength="6" type="number" id="zip" name="zip" placeholder="Example: 123456" required />
+                pattern="\d*" minlength="6" maxlength="6" type="number" id="zip" name="zip" placeholder="Example: 123456" required />
               </div>
             </div>
           </div>
@@ -79,6 +79,20 @@
 </div>
 <script>
   function submitForm(){
+    var name = document.forms["form"]["name"].value;
+    var email = document.forms["form"]["email"].value;
+    var adr = document.forms["form"]["adr"].value;
+    var zip = document.forms["form"]["zip"].value;
+    var cname = document.forms["form"]["cname"].value;
+    var ccnum = document.forms["form"]["ccnum"].value;
+    var expyear = document.forms["form"]["expyear"].value;
+    var cvv = document.forms["form"]["cvv"].value;
+    if (name == null || name == "", email == null || email == "", adr == null || adr == "", 
+    zip == null || zip == "", cname == null || cname == "", ccnum == null || ccnum == "", 
+    expyear == null || expyear == "", cvv == null || cvv == "") {
+      return false;
+    }
+    
     if(typeof(localStorage) != "undefined"){
         localStorage.name = document.getElementById("name").value;
         localStorage.email = document.getElementById("email").value;
