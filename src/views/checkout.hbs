@@ -35,6 +35,10 @@
             <h3>Payment</h3>
             {{!-- Available credit cards to use with image --}}
             <label for="fname">Accepted Cards</label>
+            <select class="form-select" id="card" name="card">
+            <option class="fa fa-cc-visa" value="Visa" style="color:navy;">Visa</option>
+            <option class="fa fa-cc-mastercard" value="mastercard" style="color:red;" value="Mastercard">Mastercard</option>
+            </select>
             <div class="icon-container">
               <i class="fa fa-cc-visa" style="color:navy;"></i>
               <i class="fa fa-cc-mastercard" style="color:red;"></i>
@@ -102,6 +106,7 @@
         localStorage.cname = document.getElementById("cname").value;
         localStorage.ccnum = document.getElementById("ccnum").value;
         localStorage.expyear = document.getElementById("expyear").value;
+        localStorage.card = document.getElementById("card").value;
         localStorage.item = document.getElementById("item").value;
         localStorage.total = document.getElementById("total").value;
     }
