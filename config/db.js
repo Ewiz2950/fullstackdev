@@ -21,6 +21,11 @@ connection.connect((err) => {
               console.log("3 " + err.message);
           }
       });
+      connection.query(schema.createReceipt, function (err, results, fields) {
+        if (err) {
+            console.log("4 " + err.message);
+        }
+    });
     }
 });
 
