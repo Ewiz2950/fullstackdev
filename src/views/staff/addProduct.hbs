@@ -3,12 +3,13 @@
         <div class="row my-4">
             <h4>Add Product</h4>
         </div>
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="/staff/addProduct" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-lg-8 mb-5">
                     <div class="rounded border p-4">
                         <label for="productName" class="form-label head">Name</label>
-                        <input type="text" class="form-control mb-3" id="productName">
+                        <input type="text" class="form-control mb-3" id="productName" name="name" required>
+                        {{#if errors}}{{{errorMsg errors "name"}}}{{/if}}
                         <input type="file" id="productImage" class="imageUpload" name="mainImage"
                             accept="image/png, image/jpeg" multiple>
                         <div class="row g-0">
@@ -16,19 +17,23 @@
                             <label for="productImage" class="custom-file-upload imageUpload border rounded me-3 mb-3"></label>
                             <label for="productImage" class="custom-file-upload imageUpload border rounded me-3 mb-3"></label>
                         </div>
+                        {{{imageError}}}
                         <div id="imageUpload" class="form-text"></div>
                         <label for="description" class="form-label head mt-3">Description</label>
-                        <textarea class="form-control mb-3" id="description" rows="5" style="resize:none"></textarea>
+                        <textarea class="form-control mb-3" id="description" name="description" rows="5" style="resize:none" required></textarea>
+                        {{#if errors}}{{{errorMsg errors "description"}}}{{/if}}
                         <label for="productBrand" class="form-label head">Brand</label>
-                        <input type="text" class="form-control mb-3" id="productBrand">
+                        <input type="text" class="form-control mb-3" name="brand" id="productBrand" required>
+                        {{#if errors}}{{{errorMsg errors "brand"}}}{{/if}}
                         <div class="row">
                             <div class="col-md-3">
                                 <label for="productPrice" class="form-label head">Price</label>
-                                <input type="number" class="form-control mb-3" id="productPrice" step="0.05" min="1">
+                                <input type="number" class="form-control mb-3" name="price" id="productPrice" step="0.05" min="0.05" required>
+                                {{#if errors}}{{{errorMsg errors "price"}}}{{/if}}
                             </div>
                             <div class="col-md-4">
                                 <label for="promotion" class="form-label head">Promotion</label>
-                                <select class="form-select mb-3" id="promotion">
+                                <select class="form-select mb-3" name="promotion" id="promotion">
                                     <option selected value="Featured">Featured</option>
                                     <option value="New Arrival">New Arrival</option>
                                     <option value="Best Seller">Best Seller</option>
@@ -40,7 +45,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="category" class="form-label head">Category</label>
-                                <select class="form-select mb-3" id="category">
+                                <select class="form-select mb-3" name="category" id="category">
                                     <option selected value="Household Appliances">Household Appliances</option>
                                     <option value="Mobile & Tablets">Mobile &amp; Tablets</option>
                                     <option value="Laptops & Monitors">Laptops &amp; Monitors</option>
@@ -49,7 +54,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="subCategory" class="form-label head">Subcategory</label>
-                                <select class="form-select" id="subCategory"></select>
+                                <select class="form-select" name="subCategory" id="subCategory"></select>
                             </div>
                         </div>
                     </div>
@@ -63,7 +68,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="" class="btn btn-primary float-end"></i> Add Product</a>
+                <button type="submit" class="btn btn-primary float-end"></i> Add Product</button>
                 </div>
             </div>
         </form>

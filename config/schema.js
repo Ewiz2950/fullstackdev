@@ -3,6 +3,9 @@ let createProduct = `CREATE TABLE IF NOT EXISTS product (
                         name VARCHAR (255) NOT NULL, 
                         description VARCHAR (1000) NOT NULL,
                         price DECIMAL (10,2) NOT NULL,
+                        category VARCHAR (20) NOT NULL,
+                        subCategory VARCHAR(15) NOT NULL,
+                        promotion VARCHAR(20) NOT NULL,
                         listed BOOL DEFAULT true NOT NULL
                      )`;
 
@@ -12,7 +15,7 @@ let createImage = `CREATE TABLE IF NOT EXISTS image (
                         image VARCHAR(50) NOT NULL,
                         FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE CASCADE,
                         FOREIGN KEY (variant_id) REFERENCES variant (variant_id) ON DELETE CASCADE,
-                        PRIMARY KEY (variant_id, product_id)
+                        PRIMARY KEY (variant_id, image)
                    )`;
 
 let createVariant = `CREATE TABLE IF NOT EXISTS variant (

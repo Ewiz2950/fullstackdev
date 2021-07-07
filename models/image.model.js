@@ -2,9 +2,9 @@ const connection = require('../config/connection.js')
 
 // constructor
 const Image = function(image) {
-  this.productId = image.productId;
-  this.variantId = image.variantId;
-  this.name = image.name;
+  this.product_id = image.product_id;
+  this.variant_id = image.variant_id;
+  this.image = image.image;
 };
 
 Image.create = (image, result) => {
@@ -14,8 +14,8 @@ Image.create = (image, result) => {
       result(err, null);
       return;
     }
-    console.log("created image: ", { productId: res.productId, variantId: res.variantId, name: res.name });
-    result(null, { productId: res.productId, variantId: res.variantId, name: res.name });
+    console.log("created image: ", { productId: image.product_id, variantId: image.variant_id, name: image.image });
+    result(null, { productId: image.product_id, variantId: image.variant_id, name: image.image });
   });
 };
 
@@ -40,3 +40,5 @@ Image.findById = (productId, variantId, result) => {
     result({ status: "not_found" }, null);
   });
 };
+
+module.exports = Image;
