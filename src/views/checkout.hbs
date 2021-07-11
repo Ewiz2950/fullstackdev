@@ -1,6 +1,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="../css/checkout.css">
+<link rel="stylesheet" href="../js/checkout.js">
 <p id="Header">Checkout page</p>
 <div class="row">
   <div class="col-75">
@@ -35,6 +36,10 @@
             <h3>Payment</h3>
             {{!-- Available credit cards to use with image --}}
             <label for="fname">Accepted Cards</label>
+            <select class="form-select" id="card" name="card">
+            <option class="fa fa-cc-visa" value="Visa" style="color:blue;">Visa</option>
+            <option class="fa fa-cc-mastercard" value="mastercard" style="color:red;" value="Mastercard">Mastercard</option>
+            </select>
             <div class="icon-container">
               <i class="fa fa-cc-visa" style="color:navy;"></i>
               <i class="fa fa-cc-mastercard" style="color:red;"></i>
@@ -44,7 +49,8 @@
             <input class="form-control" type="text" id="cname" name="cname" required />
             
             <label for="ccnum">Credit card number*</label>
-            <input class="form-control" type="text" minlength="19" maxlength="19" id="ccnum" name="cardnumber" placeholder="Example: 1111-2222-3333-4444"required />
+            <input class="form-control" 
+            type="number" minlength="19" maxlength="19" id="ccnum" name="cardnumber" placeholder="Example: 1111-2222-3333-4444"required />
                         
             <div class="row">
               <div class="col-50">
@@ -69,7 +75,7 @@
     <div class="container">
       <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i></span></h4>
       {{!-- Will be currently empty if nothing and have items if something there --}}
-      <input class="form-control" type="text" id="item" name="item" value="Thinkpad Laptop - $100" readonly></input>
+      <input class="form-control" type="text" id="item" name="item" value="Thinkpad Laptop" readonly></input>
       <img class="card-img-top p-5" src="/images/laptop.png" id="laptopimage">
       <hr>
       <h4>Total</h4>
@@ -78,33 +84,3 @@
     </div>
   </div>
 </div>
-<script>
-  function submitForm(){
-    var name = document.forms["form"]["name"].value;
-    var email = document.forms["form"]["email"].value;
-    var adr = document.forms["form"]["adr"].value;
-    var zip = document.forms["form"]["zip"].value;
-    var cname = document.forms["form"]["cname"].value;
-    var ccnum = document.forms["form"]["ccnum"].value;
-    var expyear = document.forms["form"]["expyear"].value;
-    var cvv = document.forms["form"]["cvv"].value;
-    if (name == null || name == "", email == null || email == "", adr == null || adr == "", 
-    zip == null || zip == "", cname == null || cname == "", ccnum == null || ccnum == "", 
-    expyear == null || expyear == "", cvv == null || cvv == "") {
-      return false;
-    }
-    
-    if(typeof(localStorage) != "undefined"){
-        localStorage.name = document.getElementById("name").value;
-        localStorage.email = document.getElementById("email").value;
-        localStorage.adr = document.getElementById("adr").value;
-        localStorage.zip = document.getElementById("zip").value;
-        localStorage.cname = document.getElementById("cname").value;
-        localStorage.ccnum = document.getElementById("ccnum").value;
-        localStorage.expyear = document.getElementById("expyear").value;
-        localStorage.item = document.getElementById("item").value;
-        localStorage.total = document.getElementById("total").value;
-    }
-    document.getElementById("form").submit();
-}
-</script>

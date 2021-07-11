@@ -9,8 +9,8 @@
     }
     #button{
         font-size: 25px;
-        position: absolute;
-        bottom: 5%;
+        position: relative;
+        bottom: 20%;
         left: 38%;
     }
 </style>
@@ -25,10 +25,11 @@ Name: <span id="name"></span><br>
 Email: <span id="email"></span><br>
 Address: <span id="adr"></span><br>
 Zip: <span id="zip"></span><br>
+Credit Card Type: <span id="card"></span><br>
 Credit Card Name: <span id="cname"></span><br>
 Credit Card Number: <span id="ccnum"></span><br>
 Credit Card expiring Year and Month: <span id="expyear"></span><br>
-Item: <span id="item"></span>
+Item: <span id="item"></span><br>
 Total: <span id="total"></span>
 </div>
 <form action="http://localhost:5000/">
@@ -43,6 +44,7 @@ Total: <span id="total"></span>
         document.getElementById("zip").innerHTML = localStorage.zip;
         document.getElementById("cname").innerHTML = localStorage.cname;
         document.getElementById("ccnum").innerHTML = localStorage.ccnum;
+        document.getElementById("card").innerHTML = localStorage.card;
         document.getElementById("expyear").innerHTML = localStorage.expyear;
         document.getElementById("item").innerHTML = localStorage.item;
         document.getElementById("total").innerHTML = localStorage.total;

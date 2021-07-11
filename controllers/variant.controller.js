@@ -3,11 +3,12 @@ const Variant = require("../models/variant.model.js");
 exports.create = (req) => {
 
   if (!req) {
-    return new Promise((resolve, reject) => {reject('Empty content.')})
+    return new Promise((resolve, reject) => {
+      reject('Empty content.')
+    })
   };
 
   let promises = [];
-
   for (variantName in req) {
     promises.push(new Promise((resolve, reject) => {
 
@@ -25,23 +26,21 @@ exports.create = (req) => {
       });
     }))
   };
-  
+
   return Promise.all(promises);
 }
 
 // Find a single Variant with imageId and variantId
-exports.findOne = (req, res) => {
-  Variant.findById(req.params.productId, req.params.variantId, (err, data) => {
-    if (err) {
-      if (err.status === "not_found") {
-        res.status(404).send({
-          message: `Variant with product id ${req.params.productId} and variant id ${req.params.variantId} not found.`
-        });
-      } else {
-        res.status(500).send({
-          message: `Error retrieving Variant with product id ${req.params.productId} and variant id ${req.params.variantId} not found.`
-        });
-      }
-    } else res.send(data);
-  });
+exports.findById = (productId, variantId) => {
+  return new Promise((resolve, reject) => {
+    Variant.findById(productId, variantId, (err, data) => {
+      if (err) {
+        if (err.status === "not_found") {
+          resolve()
+        } else {
+          reject(err)
+        }
+      } else resolve(data);
+    });
+  })
 };

@@ -23,9 +23,16 @@ connection.connect((err) => {
       });
       connection.query(schema.createReview, function (err, results, fields) {
         if (err) {
-            console.log("4 " + err.message);
+            console.log("5 " + err.message);
         }
      });
+
+      connection.query(schema.createReceipt, function (err, results, fields) {
+        if (err) {
+            console.log("4 " + err.message);
+        }
+    });
+
     }
 });
 

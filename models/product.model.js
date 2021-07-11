@@ -3,7 +3,9 @@ const connection = require('../config/connection.js')
 // constructor
 const Product = function(product) {
   this.product_id = product.product_id;
+  this.variant_id = product.variant_id;
   this.name = product.name;
+  this.brand = product.brand;
   this.description = product.description;
   this.price = product.price;
   this.category = product.category;
@@ -18,13 +20,12 @@ Product.create = (product, result) => {
       result(err, null);
       return;
     }
-    console.log("created product: ", { id: product.product_id, name: product .name });
     result(null, res);
   });
 };
 
 Product.findById = (productId, result) => {
-  connection.query(`SELECT * FROM image WHERE product_id = ${productId}`, (err, res) => {
+  connection.query("SELECT name, brand, variant_id, price, description FROM product WHERE product_id = ?", productId, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -32,7 +33,6 @@ Product.findById = (productId, result) => {
     }
 
     if (res.length) {
-      console.log("found product: ", res[0]);
       result(null, res[0]);
       return;
     }
@@ -42,15 +42,14 @@ Product.findById = (productId, result) => {
   });
 };
 
-Product.getAll = result => {
-  connection.query("SELECT * FROM customers", (err, res) => {
+Product.getAll = (filters, result) => {
+  connection.query("SELECT * FROM product WHERE ?", filters, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
       return;
     }
 
-    console.log("customers: ", res);
     result(null, res);
   });
 };

@@ -1,3 +1,11 @@
+const {check, validationResult} = require('express-validator');
+var express = require('express');
+var router = express.Router();
+const {v4: uuidv4} = require('uuid');
+var templates = require('../dist/views/templates.js');
+const Product = require("../controllers/product.controller.js");
+const Variant = require("../controllers/variant.controller.js");
+const Image = require("../controllers/image.controller.js");
 const path = require('path');
 
 // multer config
@@ -11,24 +19,15 @@ const storage = multer.diskStorage({
 
 var upload = multer({storage: storage});
 
-const {check, validationResult} = require('express-validator');
-var express = require('express');
-var router = express.Router();
-const {v4: uuidv4} = require('uuid');
-var templates = require('../dist/views/templates.js');
-const Product = require("../controllers/product.controller.js");
-const Variant = require("../controllers/variant.controller.js");
-const Image = require("../controllers/image.controller.js");
-
 
 const sortVariant = (files, body) => {
-  let variants = {};
   let product = {}
   product["main"] = {
     product_id: uuidv4(),
     variant_id: uuidv4(),
     name: body["name"],
     description: body["description"],
+    brand: body["brand"],
     price: body["price"],
     category: body["category"],
     subCategory: body["subCategory"],
@@ -42,8 +41,8 @@ const sortVariant = (files, body) => {
     var number = image.fieldname.slice(image.fieldname.length - 1);
     var variantName = body["variantName" + number].trim();
     if (variantName != '') {
-      if (!(variantName in variants)) {
-        var variantId = uuidv4()
+      if (!(variantName in product)) {
+        var variantId = uuidv4();
         product[variantName] = {
           name: variantName,
           variant_id: variantId,
@@ -75,7 +74,7 @@ const validateImages = (req, res, next) => {
         return res.send(templates.main({body: templates.addProduct({imageError: "<p class='text-danger'>Image file is not valid.</p>"})}))
       }
     })
-  }
+  } else return res.send(templates.main({body: templates.addProduct({imageError: "<p class='text-danger'>Image is required.</p>"})}))
   next();
 }
 

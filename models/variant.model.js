@@ -14,25 +14,21 @@ Variant.create = (variant, result) => {
       result(err, null);
       return;
     }
-    console.log("created variant: ", { id: variant.variant_id, productId: variant.product_id, name: variant.name });
     result(null, res);
   });
 };
 
 Variant.findById = (productId, variantId, result) => {
   connection.query(
-    `SELECT * FROM variant WHERE product_id = ${productId} 
-    AND variant_id = ${variantId}`, 
+    "SELECT * FROM variant WHERE product_id = ? AND variant_id != ?", [productId, variantId],
     (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
       return;
     }
-
-    if (res.length) {
-      console.log("found variant: ", res[0]);
-      result(null, res[0]);
+    if (res.length > 0) {
+      result(null, res);
       return;
     }
 
