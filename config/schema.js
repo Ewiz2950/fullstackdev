@@ -37,4 +37,11 @@ let createReceipt = `CREATE TABLE IF NOT EXISTS receipt (
                         total VARCHAR(10) NOT NULL
 )`
 
-module.exports = {createProduct, createVariant, createImage, createReceipt};
+let createReview = `CREATE TABLE IF NOT EXISTS review (
+                        review_id VARCHAR(30) PRIMARY KEY NOT NULL,
+                        product_id VARCHAR(36) NOT NULL,
+                        review_text VARCHAR(1000) NOT NULL,
+                        review_star VARCHAR(5) NOT NULL
+)`
+
+module.exports = {createProduct, createVariant,createReview ,createImage, createReceipt};

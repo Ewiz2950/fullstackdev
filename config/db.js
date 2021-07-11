@@ -21,6 +21,11 @@ connection.connect((err) => {
               console.log("3 " + err.message);
           }
       });
+      connection.query(schema.createReview, function (err, results, fields) {
+        if (err) {
+            console.log("5 " + err.message);
+        }
+     });
     }
 });
 
