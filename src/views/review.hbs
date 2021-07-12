@@ -3,31 +3,36 @@
 	<div class="col-md-6 mx-auto">
 		<div class="card card-body">
 
-			<h3 class="text-center">product review</h3>
-			<form method="post" action=""> 
+			<h3 class="text-center">Product Review</h3>
+			<form method="post"> 
 				<div class="form-group">
-					<label for="star">Star</label><br>
-                    <ul>
-                        <div class="rate">
-                            <input type="radio" id="star5" name="rate" value="5" />
-                            <label for="star5" title="text">5 stars</label>
-                            <input type="radio" id="star4" name="rate" value="4" />
-                            <label for="star4" title="text">4 stars</label>
-                            <input type="radio" id="star3" name="rate" value="3" />
-                            <label for="star3" title="text">3 stars</label>
-                            <input type="radio" id="star2" name="rate" value="2" />
-                            <label for="star2" title="text">2 stars</label>
-                            <input type="radio" id="star1" name="rate" value="1" />
-                            <label for="star1" title="text">1 star</label>
-                        </div>
-                    </ul>
-
+                    <div class="col-md-8">
+                    <img src="/images/laptop.png" class="card-img border-right p-4 border-bottom rounded" id="main-img"
+                        alt="product">
+                    </div>
+                    <div class="col-lg-8">
+                        <label for="star">Star</label><br>
+                        <ul>
+                            <div class="rate">
+                                <input type="radio" id="star5" name="rate" value="5" />
+                                <label for="star5" title="text">5 stars</label>
+                                <input type="radio" id="star4" name="rate" value="4" />
+                                <label for="star4" title="text">4 stars</label>
+                                <input type="radio" id="star3" name="rate" value="3" />
+                                <label for="star3" title="text">3 stars</label>
+                                <input type="radio" id="star2" name="rate" value="2" />
+                                <label for="star2" title="text">2 stars</label>
+                                <input type="radio" id="star1" name="rate" value="1" />
+                                <label for="star1" title="text">1 star</label>
+                            </div>
+                        </ul>
+                    </div>
                 </div>
 				<div class="form-group">
 					<br><br><label for="review">Review</label><br>
-					<input type="text" name="review" ><br><br>
+					<textarea type="text" id="review" class="form-control" ></textarea><br><br>
 				</div>
-				<button type="submit" onclick="login.js"  class="btn btn-primary">Submit</button>
+				<button id="addReview" type="submit" class="btn btn-primary"><a href="/ " style="color: aliceblue;">Submit</a></button>
 			</form>
 		</div>
 	</div>
