@@ -2,9 +2,8 @@ const connection = require('../config/connection.js')
 
 // constructor
 const Image = function(image) {
-  this.variant_id = image.variant_id;
-  this.product_id = image.product_id;
-  this.image = image.image;
+  this.id = image.id;
+  this.imageName = image.imageName;
 };
 
 Image.create = (image, result) => {
@@ -14,7 +13,7 @@ Image.create = (image, result) => {
       result(err, null);
       return;
     }
-    result(null, { productId: image.product_id, variantId: image.variant_id, name: image.image });
+    result(null, { id: image.id, imageName: image.imageName });
   });
 };
 

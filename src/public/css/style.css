@@ -207,7 +207,7 @@
 }
 
 #addProduct .custom-file-upload {
-  background-image: url('../images/addimage.jpg');
+  background-image: url('../../images/addimage.jpg');
   width: 224px;
   height: 153px;
   cursor: pointer;

@@ -3,7 +3,6 @@ const Product = require("../models/product.model.js");
 exports.create = (req) => {
 
     return new Promise((resolve, reject) => {
-        // Validate request
         if (!req) {
             reject("Empty content.")
         }

@@ -3,13 +3,13 @@ const connection = require('../config/connection.js')
 // constructor
 const Product = function(product) {
   this.product_id = product.product_id;
-  this.variant_id = product.variant_id;
+  this.quantity = product.quantity;
   this.name = product.name;
   this.brand = product.brand;
   this.description = product.description;
   this.price = product.price;
   this.category = product.category;
-  this.subCategory = product.subCategory;
+  this.subcategory = product.subcategory;
   this.promotion = product.promotion;
 };
 
@@ -22,14 +22,14 @@ Product.create = (product, result) => {
     }
     result(null, res);
   });
-};
+}; 
 
 Product.findById = (productId, result) => {
   connection.query("SELECT name, brand, variant_id, price, description FROM product WHERE product_id = ?", productId, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
-      return;
+      return; 
     }
 
     if (res.length) {

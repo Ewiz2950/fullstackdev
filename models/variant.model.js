@@ -3,8 +3,8 @@ const connection = require('../config/connection.js')
 // constructor
 const Variant = function(variant) {
   this.variant_id = variant.variant_id;
-  this.product_id = variant.product_id;
   this.name = variant.name;
+  this.quantity = variant.quantity;
 };
 
 Variant.create = (variant, result) => {
