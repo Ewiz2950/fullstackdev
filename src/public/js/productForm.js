@@ -1,9 +1,9 @@
 const categories = {
-                    "Household Appliances": ["Fridge", "Washing Machine", "Stove", "Oven", "Fan"],
-                    "Mobile & Tablets": ["Mobile Phone", "Tablet"],
-                    "Laptops & Monitors": ["Laptop", "Monitor"],
-                    "Misc": ["TVs & Audio", "Accessories"]
-                   }
+    "Household Appliances": ["Fridge", "Washing Machine", "Stove", "Oven", "Fan"],
+    "Mobile & Tablets": ["Mobile Phone", "Tablet"],
+    "Laptops & Monitors": ["Laptop", "Monitor"],
+    "Misc": ["TVs & Audio", "Accessories"]
+}
 
 let number = 0;
 
@@ -43,8 +43,8 @@ function showImages(className, id) {
     }
 }
 
-document.getElementById('productImage').addEventListener('change', function () {
-    showImages("imageUpload", "productImage")
+document.getElementById('variantImage0').addEventListener('change', function () {
+    showImages("variantImageUpload0", "variantImage0")
 });
 
 function subcategories() {
@@ -56,6 +56,26 @@ function subcategories() {
         option.value = element;
         option.class = 'subcategory';
         subCategorySelect.appendChild(option);
+    })
+}
+
+function addSum() {
+    let inputQuantityList = document.querySelectorAll('.inputQuantity');
+    inputQuantityList.forEach(element => {
+        element.addEventListener('change', function () {
+            let sum = 0;
+            let variantQuantityList = document.querySelectorAll('.variantQuantity');
+            if (variantQuantityList.length != 0) {
+                variantQuantityList.forEach(element => {
+                    if (element.value == '') {
+                        sum += 0
+                    } else {
+                        sum += parseInt(element.value)
+                    };
+                })
+                document.getElementById('productQuantity').value = sum;
+            }
+        })
     })
 }
 
@@ -92,7 +112,7 @@ function addVariant(number) {
     inputQuantity.setAttribute("type", "number");
     inputQuantity.setAttribute("min", 1);
     inputQuantity.setAttribute("step", 1);
-    inputQuantity.setAttribute("class", "form-control mb-3 ");
+    inputQuantity.setAttribute("class", "form-control mb-3 inputQuantity variantQuantity");
     inputQuantity.setAttribute("id", "variantQuantity" + number);
     inputQuantity.setAttribute("name", `variant[${number}][quantity]`);
     var divRow = document.createElement('div');
@@ -125,18 +145,22 @@ function addVariant(number) {
         event.preventDefault();
         document.getElementById("variant" + number).remove();
     });
+
+    addSum()
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+addSum();
+
+document.addEventListener('DOMContentLoaded', function () {
     subcategories()
 })
 
-categorySelect.addEventListener('change', function() {
+categorySelect.addEventListener('change', function () {
     subcategories()
 });
 
-document.getElementById('addVariant').addEventListener('click', function(event) {
+document.getElementById('addVariant').addEventListener('click', function (event) {
     event.preventDefault();
-    addVariant(number);
     number += 1;
+    addVariant(number);
 });
