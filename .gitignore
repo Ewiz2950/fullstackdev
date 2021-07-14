@@ -8,3 +8,5 @@
 npm-debug.log
 
 /dist
+
+/public/images/uploads
