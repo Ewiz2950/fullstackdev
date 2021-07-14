@@ -23,39 +23,33 @@ connection.connect((err) => {
             }
         });
 
-        connection.query(schema.productImage, function (err, results, fields) {
+        connection.query(schema.createReview, function (err, results, fields) {
             if (err) {
                 console.log("4 " + err.message);
             }
         });
 
-        connection.query(schema.createReview, function (err, results, fields) {
+        connection.query(schema.createReceipt, function (err, results, fields) {
             if (err) {
                 console.log("5 " + err.message);
             }
         });
 
-        connection.query(schema.createReceipt, function (err, results, fields) {
-            if (err) {
-                console.log("6 " + err.message);
-            }
-        });
-
         connection.query(schema.variantImage, function (err, results, fields) {
             if (err) {
-                console.log("7 " + err.message);
+                console.log("6 " + err.message);
             }
         });
         
         connection.query(schema.productVariant, function (err, results, fields) {
             if (err) {
-                console.log("8 " + err.message);
+                console.log("7 " + err.message);
             }
         });
 
         connection.query(schema.createReceipt, function (err, results, fields) {
             if (err) {
-                console.log("9 " + err.message);
+                console.log("8 " + err.message);
             }
         });
     }

@@ -1,12 +1,13 @@
 let Product = `CREATE TABLE IF NOT EXISTS product (
-                  id VARCHAR (36) NOT NULL, 
-                  name VARCHAR (255) NOT NULL, 
+                  id VARCHAR (36) PRIMARY KEY NOT NULL, 
+                  quantity INT (11) NOT NULL, 
                   brand VARCHAR(30) NOT NULL,
                   description VARCHAR (1000) NOT NULL,
                   price DECIMAL (10,2) NOT NULL,
                   category VARCHAR (20) NOT NULL,
                   subcategory VARCHAR (15) NOT NULL,
                   promotion VARCHAR (20) NOT NULL,
+                  hasVariant BOOL NOT NULL,
                   listed BOOL DEFAULT true NOT NULL
                )`;
 
@@ -17,10 +18,11 @@ let Image = `CREATE TABLE IF NOT EXISTS image (
 
 let Variant = `CREATE TABLE IF NOT EXISTS variant (
                   id VARCHAR (36) PRIMARY KEY NOT NULL,
-                  name VARCHAR (255) NOT NULL
+                  name VARCHAR (255) NOT NULL,
+                  quantity INT (11) NOT NULL
                   )`
 
-let productVariant = `CREATE TABLE IF NOT EXISTS variant (
+let productVariant = `CREATE TABLE IF NOT EXISTS product_variant (
                         productId VARCHAR (36) NOT NULL,
                         variantId VARCHAR (36) NOT NULL,
                         FOREIGN KEY (productId) REFERENCES product (id) ON DELETE CASCADE,
@@ -28,15 +30,8 @@ let productVariant = `CREATE TABLE IF NOT EXISTS variant (
                         PRIMARY KEY (productId, variantId)
                      )`
 
-let productImage = `CREATE TABLE IF NOT EXISTS variant (
-                     productId VARCHAR (36) NOT NULL,
-                     imageId VARCHAR (36) NOT NULL,
-                     FOREIGN KEY (productId) REFERENCES product (id) ON DELETE CASCADE,
-                     FOREIGN KEY (imageId) REFERENCES image (id) ON DELETE CASCADE,
-                     PRIMARY KEY (productId, imageId)
-                  )`
 
-let variantImage = `CREATE TABLE IF NOT EXISTS variant (
+let variantImage = `CREATE TABLE IF NOT EXISTS variant_image (
                      variantId VARCHAR (36) NOT NULL,
                      imageId VARCHAR (36) NOT NULL,
                      FOREIGN KEY (imageId) REFERENCES image (id) ON DELETE CASCADE,
@@ -62,4 +57,4 @@ let createReview = `CREATE TABLE IF NOT EXISTS review (
                         review_star VARCHAR(5) NOT NULL
 )`
 
-module.exports = { Product, Variant, Image, productVariant, productImage, variantImage, createReceipt, createReview };
+module.exports = { Product, Variant, Image, productVariant, variantImage, createReceipt, createReview };
