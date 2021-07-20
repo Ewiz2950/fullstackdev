@@ -1,9 +1,9 @@
 const categories = {
-                    "Household Appliances": ["Fridge", "Washing Machine", "Stove", "Oven", "Fan"],
-                    "Mobile & Tablets": ["Mobile Phone", "Tablet"],
-                    "Laptops & Monitors": ["Laptop", "Monitor"],
-                    "Misc": ["TVs & Audio", "Accessories"]
-                   }
+    "Household Appliances": ["Fridge", "Washing Machine", "Stove", "Oven", "Fan"],
+    "Mobile & Tablets": ["Mobile Phone", "Tablet"],
+    "Laptops & Monitors": ["Laptop", "Monitor"],
+    "Misc": ["TVs & Audio", "Accessories"]
+}
 
 let number = 0;
 
@@ -13,9 +13,8 @@ function showImages(className, id) {
     var upload = document.getElementById(id);
     if (upload.files && upload.files.length <= 3) {
         var inputLabels = document.querySelectorAll(".custom-file-upload." + className);
-        console.log(inputLabels);
         for (var i = 0; i < inputLabels.length; i++) {
-            inputLabels[i].style.background = "url('../images/addimage.jpg')";
+            inputLabels[i].style.background = "url('../../images/addimage.jpg')";
             inputLabels[i].style.backgroundSize = "100% 100%"
         }
 
@@ -44,12 +43,12 @@ function showImages(className, id) {
     }
 }
 
-document.getElementById('productImage').addEventListener('change', function () {
-    showImages("imageUpload", "productImage")
+document.getElementById('variantImage0').addEventListener('change', function () {
+    showImages("variantImageUpload0", "variantImage0")
 });
 
-function subCategories() {
-    var subCategorySelect = document.getElementById('subCategory');
+function subcategories() {
+    var subCategorySelect = document.getElementById('subcategory');
     subCategorySelect.innerHTML = "";
     categories[categorySelect.value].forEach(element => {
         var option = document.createElement('option');
@@ -57,6 +56,26 @@ function subCategories() {
         option.value = element;
         option.class = 'subcategory';
         subCategorySelect.appendChild(option);
+    })
+}
+
+function addSum() {
+    let inputQuantityList = document.querySelectorAll('.inputQuantity');
+    inputQuantityList.forEach(element => {
+        element.addEventListener('change', function () {
+            let sum = 0;
+            let variantQuantityList = document.querySelectorAll('.variantQuantity');
+            if (variantQuantityList.length != 0) {
+                variantQuantityList.forEach(element => {
+                    if (element.value == '') {
+                        sum += 0
+                    } else {
+                        sum += parseInt(element.value)
+                    };
+                })
+                document.getElementById('productQuantity').value = sum;
+            }
+        })
     })
 }
 
@@ -77,7 +96,7 @@ function addVariant(number) {
     input.setAttribute("type", "text");
     input.setAttribute("class", "form-control mb-3 imageUpload" + number);
     input.setAttribute("id", "variantName" + number);
-    input.setAttribute("name", "variantName" + number);
+    input.setAttribute("name", `variant[${number}][name]`);
     var inputFile = document.createElement('input');
     inputFile.setAttribute("type", "file");
     inputFile.setAttribute("id", "variantImage" + number);
@@ -85,6 +104,17 @@ function addVariant(number) {
     inputFile.setAttribute("name", "variantImage" + number);
     inputFile.setAttribute("accept", "image/png, image/jpeg");
     inputFile.setAttribute("multiple", "");
+    var labelQuantity = document.createElement('label');
+    labelQuantity.setAttribute("for", "variantQuantity" + number);
+    labelQuantity.setAttribute("class", "form-label head");
+    labelQuantity.innerHTML = "Quantity";
+    var inputQuantity = document.createElement('input');
+    inputQuantity.setAttribute("type", "number");
+    inputQuantity.setAttribute("min", 1);
+    inputQuantity.setAttribute("step", 1);
+    inputQuantity.setAttribute("class", "form-control mb-3 inputQuantity variantQuantity");
+    inputQuantity.setAttribute("id", "variantQuantity" + number);
+    inputQuantity.setAttribute("name", `variant[${number}][quantity]`);
     var divRow = document.createElement('div');
     divRow.class = "row g-0";
     for (let i = 1; i < 4; i++) {
@@ -98,10 +128,12 @@ function addVariant(number) {
     }
     var imageError = document.createElement("div");
     imageError.id = "variantImageUpload" + number;
-    imageError.class = "form-text";
+    imageError.class = "form-text text-danger";
     div.appendChild(deleteVariant);
     div.appendChild(label);
     div.appendChild(input);
+    div.appendChild(labelQuantity);
+    div.appendChild(inputQuantity);
     div.appendChild(inputFile);
     div.appendChild(divRow);
     div.appendChild(imageError);
@@ -113,18 +145,22 @@ function addVariant(number) {
         event.preventDefault();
         document.getElementById("variant" + number).remove();
     });
+
+    addSum()
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    subCategories()
+addSum();
+
+document.addEventListener('DOMContentLoaded', function () {
+    subcategories()
 })
 
-categorySelect.addEventListener('change', function() {
-    subCategories()
+categorySelect.addEventListener('change', function () {
+    subcategories()
 });
 
-document.getElementById('addVariant').addEventListener('click', function(event) {
-    number += 1;
+document.getElementById('addVariant').addEventListener('click', function (event) {
     event.preventDefault();
+    number += 1;
     addVariant(number);
 });

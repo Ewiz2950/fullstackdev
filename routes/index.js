@@ -1,4 +1,5 @@
 var express = require('express');
+const fetch = require("node-fetch");
 var router = express.Router();
 var templates = require('../dist/views/templates.js');
 
@@ -9,37 +10,53 @@ router.get('/', function (req, res, next) {
     res.send(templates.main(data));
 });
 
-router.get('/search', function (req, res, next) {
-    var data = {
-        body: templates.productGrid({search: "Laptop"})
-    };
+router.get('/product/:productId', function (req, res, next) {
 
-    res.send(templates.main(data));
-});
+    fetch("http://localhost:5000/search/product?id=" + req.params.productId, {
+                method: "GET",
+     })
+    .then(response => response.json())
+    .then(response => {
+        var data = {
+            body: templates.product({
+                product: response,
+            })
+        };
+        res.send(templates.main(data))
+    })
+})
 
+router.get('/category/:category', function (req, res, next) {
+    let filters = {};
+    let category = "";
+    req.params.category.split('-').forEach(word => {
+        if (word.toLowerCase() != 'tvs') {
+            category += word.charAt(0).toUpperCase() + word.slice(1).toLowerCase() + " ";
+        } else {
+            category += word.slice(0, 2).toUpperCase() + word.slice(2).toLowerCase() + " ";
+        }
+    })
 
-router.get('/product', function (req, res, next) {
-    var data = {
-        body: templates.product()
-    };
+    filters.subcategory = category.trim();
 
-    res.send(templates.main(data));
-});
-
-router.get('/category', function (req, res, next) {
-    var data = {
-        body: templates.productGrid({category: "Laptops"})
-    };
-
-    res.send(templates.main(data));
-});
-
-router.get('/category', function (req, res, next) {
-    var data = {
-        body: templates.productGrid({category: "Laptops"})
-    };
-
-    res.send(templates.main(data));
-});
+    fetch("http://localhost:5000/search/products", {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify(filters)
+    })
+    .then(response => response.json())
+    .then(response => {
+        var data = {
+            body: templates.productGrid({
+                products: response,
+                category: category.trim()
+            })
+        };
+        res.send(templates.main(data))
+    })
+})
 
 module.exports = router;

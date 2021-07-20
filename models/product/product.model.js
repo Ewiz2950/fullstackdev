@@ -1,14 +1,16 @@
-const connection = require('../config/connection.js')
+const connection = require('../../config/connection.js')
 
 // constructor
 const Product = function(product) {
-  this.product_id = product.product_id;
-  this.name = product.name;
+  this.id = product.id;
+  this.quantity = product.quantity;
+  this.brand = product.brand;
   this.description = product.description;
   this.price = product.price;
   this.category = product.category;
-  this.subCategory = product.subCategory;
+  this.subcategory = product.subcategory;
   this.promotion = product.promotion;
+  this.hasVariant = product.hasVariant;
 };
 
 Product.create = (product, result) => {
@@ -18,40 +20,37 @@ Product.create = (product, result) => {
       result(err, null);
       return;
     }
-    console.log("created product: ", { id: product.product_id, name: product .name });
-    result(null, res);
+    result(null, product.id);
   });
-};
+}; 
 
-Product.findById = (productId, result) => {
-  connection.query(`SELECT * FROM image WHERE product_id = ${productId}`, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
-      return;
-    }
-
-    if (res.length) {
-      console.log("found product: ", res[0]);
-      result(null, res[0]);
-      return;
-    }
-
-    // not found Product with the id
-    result({ status: "not_found" }, null);
-  });
-};
-
-Product.getAll = result => {
-  connection.query("SELECT * FROM customers", (err, res) => {
+Product.getAll = (filters, result) => {
+  connection.query("SELECT * FROM product WHERE ?", filters, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
       return;
     }
 
-    console.log("customers: ", res);
     result(null, res);
+  });
+};
+
+Product.findById = (productId, result) => {
+  connection.query("SELECT * FROM product WHERE id = ?", productId, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return; 
+    }
+
+    if (res.length) {
+      result(null, res[0]);
+      return;
+    }
+
+    // not found Product with the id
+    result({ status: "not_found" }, null);
   });
 };
 

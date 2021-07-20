@@ -2,28 +2,41 @@
     <div class="container p-0">
         <div class="card mt-5 mx-auto flex">
             <div class="row no-gutters">
-                <div class="col-md-4">
-                    <img src="/images/laptop.png" class="card-img border-right p-4 border-bottom rounded" id="main-img"
-                        alt="product">
-                    <div class="row no-gutters border-right">
+                <div class="col-md-6">
+                    <img src="" class="card-img p-4" id="main-img">
+                    <div class="border-right" id="variant-images">
+                        <div id="variant-img" class="row g-0"></div>
                     </div>
                 </div>
-                <div class="col-md-8">
-                    <div class="card-body p-4">
-                        <h2 class="card-text font-weight-bold">Brand</h2>
-                        <h2 class="card-title font-weight-bold">Name</h2>
-                        <h3 class="card-title">$15</h3>
+                <div class="col-md-6">
+                    <div class="card-body p-4 d-flex flex-column">
+                        <p class="card-text text-decoration-underline mb-2" id="product-brand">{{{product.brand}}}</p>
+                        <h4 class="card-title font-weight-bold" id="product-name"></h4>
                         <ul class="list-inline">
                             <li class="list-inline-item"><i class="bi bi-star-fill text-warning"></i></li>
                             <li class="list-inline-item"><i class="bi bi-star-fill text-warning"></i></li>
                             <li class="list-inline-item"><i class="bi bi-star-fill text-warning"></i></li>
                             <li class="list-inline-item"><i class="bi bi-star-fill text-warning"></i></li>
                             <li class="list-inline-item"><i class="bi bi-star-fill text-warning"></i></li>
-                            <small class="text-secondary">5 reviews</small>
+                            <a href="#anchor-name">5</a>
+                            <small class="text-secondary"> reviews</small>
                         </ul>
-                        <p class="card-text pb-5 border-bottom">Product Description</p>
-                        <ul class="list-unstyled">
-                            <li class="d-inline-block mr-3"><a href="" class="btn btn-primary"><i
+                        <h4 class="card-title mt-4" id="product-price">${{{product.price}}}</h4>
+                        <p class="card-text mt-5 pb-5" id="product-description">{{{product.description}}}</p>
+                        <div class="variant mb-5">
+                        <ul>
+                            {{#each product.variants}}
+                            <li>
+                            <label>
+                                <input type="radio" name="variant" value="{{{this.id}}}">
+                                <img class="swatch border rounded" src="/uploads/{{{this.images.[0]}}}"></img> 
+                            </label>
+                            </li>
+                            {{/each}}
+                        </ul> 
+                        </div> 
+                        <ul class="list-unstyled mb-0">
+                            <li class="d-inline-block mr-3"><a href="" class="btn btn-primary mt-auto"><i
                                         class="bi bi-cart-plus"></i> Add to Cart</a></li>
                         </ul>
                     </div>
@@ -87,5 +100,58 @@
                 </a>
             </div>
         </div>
+        <div class="card mt-5 mx-auto flex">
+            <div class="review-card" id="anchor-name">
+            </div>
+        </div>
     </div>
 </main>
+<script>
+    function replace(response, index) {
+        document.getElementById('product-name').textContent = response.variants[index].name;
+        document.getElementById('main-img').src = `/uploads/${response.variants[index].images[0]}`;
+        var div = document.createElement('div');
+        div.setAttribute('id', 'variant-img');
+        div.setAttribute('class', 'row g-0');
+        response.variants[index].images.forEach(image => {
+            var divcol = document.createElement('div');
+            divcol.setAttribute('id', 'variant-img');
+            divcol.setAttribute('class', 'col-3');
+            var img = document.createElement('img');
+            img.setAttribute('src', `/uploads/${image}`);
+            img.setAttribute('class', 'card-img');
+            img.setAttribute('alt', 'product');
+            divcol.append(img);
+            div.append(divcol);
+        })
+        var current = document.getElementById("variant-img");
+        current.replaceWith(div);
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let productId = window.location.pathname.split('/').pop();
+        let radios = document.querySelectorAll("input[name='variant']");
+        var index = 0;
+        for (var i = 0, length = radios.length; i < length; i++) {
+            if (radios[i].checked) {
+                index = i
+            } else if (i == (length - 1)) {
+                radios[0].checked = true;
+            }
+        };
+        fetch("http://localhost:5000/search/product?id=" + productId, {
+                method: "GET",
+            })
+            .then(response => response.json())
+            .then(response => {
+                replace(response, index)
+
+                for (var i = 0, length = radios.length; i < length; i++) {
+                    radios[i].addEventListener('change', function(event) {
+                        replace(response, Array.from(radios).indexOf(event.target))
+                    })
+                }
+            })
+    })
+</script>

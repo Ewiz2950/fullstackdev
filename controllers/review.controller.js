@@ -1,14 +1,13 @@
-const Product = require("../models/product.model.js");
+const Review = require("../models/review.model.js");
 
 exports.create = (req) => {
-    
     return new Promise((resolve, reject) => {
         // Validate request
         if (!req) {
             reject("Empty content.")
         }
-        // Create a Product
-        const product = new Product({
+        // Create a Review
+        const review = new Review({
             product_id: req.main.product_id,
             name: req.main.name,
             description: req.main.description,
@@ -19,16 +18,26 @@ exports.create = (req) => {
         });
 
         // Save Product in the database
-        Product.create(product, (err, data) => {
+        Review.create(review, (err, data) => {
             if (err) reject(err)
             else resolve()
         })
     })
 };
+exports.connect(function(err){
+    if (err) throw err;
+    console.log("Connected to review!")
+    var sql = "INSERT INTO customers (name, address) VALUES ('Company Inc', 'Highway 37')";
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log("1 record inserted"); 
+    });
+
+});
 
 // Retrieve all Products from the database.
 exports.findAll = (req, res) => {
-    Product.getAll((err, data) => {
+    Review.getAll((err, data) => {
         if (err) {
             return (err)
         } else return(data);
@@ -37,7 +46,7 @@ exports.findAll = (req, res) => {
 
 // Find a single Product with a productId
 exports.findOne = (req, res) => {
-    Product.findById(req.params.productId, (err, data) => {
+    Review.findById(req.params.productId, (err, data) => {
         if (err) {
             if (err.status === "not_found") {
                 return `Product with id ${req.params.productId} not found.`;
@@ -53,9 +62,9 @@ exports.update = (req, res) => {
         return "Content can not be empty."
     }
 
-    Product.updateById(
+    Review.updateById(
         req.params.productId,
-        new Product(req.body),
+        new Review(req.body),
         (err, data) => {
             if (err) {
                 if (err.status === "not_found") {

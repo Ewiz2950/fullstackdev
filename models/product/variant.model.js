@@ -1,10 +1,10 @@
-const connection = require('../config/connection.js')
+const connection = require('../../config/connection.js')
 
 // constructor
 const Variant = function(variant) {
-  this.variant_id = variant.variant_id;
-  this.product_id = variant.product_id;
+  this.id = variant.id;
   this.name = variant.name;
+  this.quantity = variant.quantity;
 };
 
 Variant.create = (variant, result) => {
@@ -14,30 +14,26 @@ Variant.create = (variant, result) => {
       result(err, null);
       return;
     }
-    console.log("created variant: ", { id: variant.variant_id, productId: variant.product_id, name: variant.name });
-    result(null, res);
+    result(null, variant.id);
   });
 };
 
-Variant.findById = (productId, variantId, result) => {
+Variant.findById = (variantId, result) => {
   connection.query(
-    `SELECT * FROM variant WHERE product_id = ${productId} 
-    AND variant_id = ${variantId}`, 
+    "SELECT * FROM variant WHERE id = ?", variantId,
     (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
       return;
     }
-
-    if (res.length) {
-      console.log("found variant: ", res[0]);
+    if (res.length > 0) {
       result(null, res[0]);
       return;
     }
 
     // not found Variant with the id
-    result({ status: "not_found" }, null);
+    reject({ status: "not_found" }, null);
   });
 };
 

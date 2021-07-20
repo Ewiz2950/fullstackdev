@@ -10,6 +10,7 @@ const helpers = require('./dist/helpers/helpers');
 
 // connecting app routes
 var indexRouter = require('./routes/index');
+var searchRouter = require('./routes/search');
 var checkoutRouter = require('./routes/checkout');
 var receiptRouter = require('./routes/receipt');
 var reviewRouter = require('./routes/review');
@@ -34,6 +35,7 @@ app.use('/bootstrap', express.static(path.join(__dirname, "node_modules",
                                               "bootstrap-icons", "font")));
                                               
 app.use('/', indexRouter);
+app.use('/search', searchRouter);
 app.use('/staff', staffRouter);
 app.use('/checkout', checkoutRouter);
 app.use('/receipt', receiptRouter);
