@@ -31,6 +31,7 @@ let createReceipt = `CREATE TABLE IF NOT EXISTS receipt (
                         email VARCHAR(50) NOT NULL,
                         adr VARCHAR(60) NOT NULL,
                         zip VARCHAR(6) NOT NULL,
+                        card VARCHAR(15) NOT NULL,
                         cname VARCHAR(30) NOT NULL,
                         ccnum VARCHAR(19) NOT NULL,
                         item VARCHAR(30) NOT NULL,
