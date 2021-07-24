@@ -8,7 +8,7 @@
   <div class="col-75">
     <div class="containeer">
       {{!-- When fom submitted, transport to here --}}
-      <form id="form" method="GET" style="checkout.css">
+      <form id="form" method="GET" action="receipt" style="checkout.css">
       
         <div class="row">
           <div class="col-50">
@@ -87,43 +87,42 @@
   </div>
 </div>
 <script>
-  var Database_Name = 'MyDatabase';
-  var Version = 1.0;
-  var Text_Description = 'My First Web-SQL Example';
-  var Database_Size = 2 * 1024 * 1024;
-  var dbObj = openDatabase(Database_Name, Version, Text_Description, Database_Size);
-  dbObj.transaction(function (tx) {
-      tx.executeSql('CREATE TABLE IF NOT EXISTS Employee_Table (name unique, email, adr, zip)');
-  
+  if (window.openDatabase) {
+    //Create the database the parameters are 1. the database name 2.version number 3. a description 4. the size of the database (in bytes) 1024 x 1024 = 1MB
+    var mydb = openDatabase("cars_db", "0.1", "A Database of Cars I Like", 1024 * 1024);
+
+    //create the cars table using SQL for the database using a transaction
+    mydb.transaction(function (t) {
+        t.executeSql("CREATE TABLE IF NOT EXISTS help (id INTEGER PRIMARY KEY ASC, name TEXT, email TEXT, adr TEXT, zip TEXT, card TEXT, cname TEXT, ccnum TEXT, expyear TEXT, cvv TEXT, item TEXT, total TEXT)");
+    });
+} else {
+    alert("WebSQL is not supported by your browser!");
+}
   function submitForm(){
-    help();
     Insert();
+    help();
   }
   function Insert(){
-                var name = document.getElementById("name").value;
-                var email = document.getElementById("email").value;
-                var adr = document.getElementById("adr").value;
-                var zip = document.getElementById("zip").value;
-                dbObj.transaction(function (tx) {
-                    tx.executeSql('insert into Employee_Table(name, email, adr, zip) values(' + name + ',"' + email + '","' + adr + '",' + zip + ')');
-                  });
+    if (mydb) {
+        //get the values of the make and model text inputs
+        var name = document.getElementById("name").value;
+        var email = document.getElementById("email").value;
+        var adr = document.getElementById("adr").value;
 
-  }
-  function help(){
-    var name = document.forms["form"]["name"].value;
-    var email = document.forms["form"]["email"].value;
-    var adr = document.forms["form"]["adr"].value;
-    var zip = document.forms["form"]["zip"].value;
-    var cname = document.forms["form"]["cname"].value;
-    var ccnum = document.forms["form"]["ccnum"].value;
-    var expyear = document.forms["form"]["expyear"].value;
-    var cvv = document.forms["form"]["cvv"].value;
-    if (name == null || name == "", email == null || email == "", adr == null || adr == "", 
-    zip == null || zip == "", cname == null || cname == "", ccnum == null || ccnum == "", 
-    expyear == null || expyear == "", cvv == null || cvv == "") {
-      return false;
+        //Test to ensure that the user has entered both a make and model
+        if (name !== "" && email !== "") {
+            //Insert the user entered details into the cars table, note the use of the ? placeholder, these will replaced by the data passed in as an array as the second parameter
+            mydb.transaction(function (t) {
+                t.executeSql("INSERT INTO help (name, email, adr) VALUES (?, ?, ?)", [name, email, adr]);
+            });
+        } else {
+            alert("You must enter a make and model!");
+        }
+    } else {
+        alert("db not found, your browser does not support web sql!");
     }
-    
+  } 
+  function help(){
     if(typeof(localStorage) != "undefined"){
         localStorage.name = document.getElementById("name").value;
         localStorage.email = document.getElementById("email").value;
@@ -137,5 +136,5 @@
         localStorage.total = document.getElementById("total").value;
     }
     document.getElementById("form").submit();
-}
+  }
 </script>
