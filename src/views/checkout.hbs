@@ -108,15 +108,23 @@
         var name = document.getElementById("name").value;
         var email = document.getElementById("email").value;
         var adr = document.getElementById("adr").value;
+        var zip = document.getElementById("zip").value;
+        var card = document.getElementById("card").value;
+        var cname = document.getElementById("cname").value;
+        var ccnum = document.getElementById("ccnum").value;
+        var expyear = document.getElementById("expyear").value;
+        var cvv = document.getElementById("cvv").value;
+        var item = document.getElementById("item").value;
+        var total = document.getElementById("total").value;
 
         //Test to ensure that the user has entered both a make and model
         if (name !== "" && email !== "") {
             //Insert the user entered details into the cars table, note the use of the ? placeholder, these will replaced by the data passed in as an array as the second parameter
             mydb.transaction(function (t) {
-                t.executeSql("INSERT INTO help (name, email, adr) VALUES (?, ?, ?)", [name, email, adr]);
+                t.executeSql("INSERT INTO help (name, email, adr, zip, card, cname, ccnum, expyear, cvv, item, total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [name, email, adr, zip, card, cname, ccnum, expyear, cvv, item, total]);
             });
         } else {
-            alert("You must enter a make and model!");
+            alert("There is a field left empty, try again!");
         }
     } else {
         alert("db not found, your browser does not support web sql!");
