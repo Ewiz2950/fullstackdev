@@ -88,8 +88,8 @@
       {{!-- Will display nothing if there are no items and will compute total cost if there are items --}}
     </div>
   </div>
+  </form>
 </div>
-</form>
 <script>
   calculate();
   let db;
@@ -104,10 +104,20 @@
   });
   }
   async function Insert(){
-    let total = document.getElementById("total").value;
     let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let adr = document.getElementById("adr").value;
+    let zip = document.getElementById("zip").value;
+    let cname = document.getElementById("cname").value;
+    let ccnum = document.getElementById("ccnum").value;
+    let card = document.getElementById("card").value;
+    let expyear = document.getElementById("expyear").value;
+    let cvv = document.getElementById("cvv").value;
+    let item = document.getElementById("item").value;
+    let quantity = document.getElementById("quantity").value;
+    let total = document.getElementById("total").value;
     let tx = db.transaction('orders', 'readwrite');
-    await tx.objectStore('orders').add({name, total});
+    await tx.objectStore('orders').add({name, email, adr, zip, cname, ccnum, card, expyear, cvv, item, quantity, total});
     await list();
   } 
 
