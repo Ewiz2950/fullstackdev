@@ -1,7 +1,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="../css/checkout.css">
-<link rel="stylesheet" href="../js/checkout.js">
+{{!-- <link rel="stylesheet" href="../js/checkout.js"> --}}
+<script src="https://cdn.jsdelivr.net/npm/idb@3.0.2/build/idb.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <p id="Header">Checkout page</p>
 <div class="row">
@@ -72,66 +73,75 @@
         <button type="submit" class="btn btn-primary" onclick="submitForm()">Submit</button><span id="hi">* - Must be filled in</span>
     </div>
   </div>
-  </form>
   <div class="col-25">
     <div class="container">
       <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i></span></h4>
       {{!-- Will be currently empty if nothing and have items if something there --}}
       <input class="form-control" type="text" id="item" name="item" value="Thinkpad Laptop" readonly></input>
+      <h4>Quantity</h4>
+      <input class="form-control" type="number" id="quantity" name="quantity" value="1" min="1" max="1"  onchange="calculate()" required></input>
       <img class="card-img-top p-5" src="/images/laptop.png" id="laptopimage">
+      <input class="form-control" type="number" id="originalcost" name="originalcost" value="100" style="color:black" readonly></input>
       <hr>
       <h4>Total</h4>
-      <input class="form-control" type="text" id="total" name="total" value="$100" style="color:black" readonly></input>
+      <input class="form-control" type="number" id="total" name="total" value="100" style="color:black" readonly required></input>
       {{!-- Will display nothing if there are no items and will compute total cost if there are items --}}
     </div>
   </div>
 </div>
+</form>
 <script>
-  if (window.openDatabase) {
-    //Create the database the parameters are 1. the database name 2.version number 3. a description 4. the size of the database (in bytes) 1024 x 1024 = 1MB
-    var mydb = openDatabase("cars_db", "0.1", "A Database of Cars I Like", 1024 * 1024);
-
-    //create the cars table using SQL for the database using a transaction
-    mydb.transaction(function (t) {
-        t.executeSql("CREATE TABLE IF NOT EXISTS help (id INTEGER PRIMARY KEY ASC, name TEXT, email TEXT, adr TEXT, zip TEXT, card TEXT, cname TEXT, ccnum TEXT, expyear TEXT, cvv TEXT, item TEXT, total TEXT)");
-    });
-} else {
-    alert("WebSQL is not supported by your browser!");
-}
+  calculate();
+  let db;
+  init();
   function submitForm(){
-    Insert();
     help();
+    Insert();
   }
-  function Insert(){
-    if (mydb) {
-        //get the values of the make and model text inputs
-        var name = document.getElementById("name").value;
-        var email = document.getElementById("email").value;
-        var adr = document.getElementById("adr").value;
-        var zip = document.getElementById("zip").value;
-        var card = document.getElementById("card").value;
-        var cname = document.getElementById("cname").value;
-        var ccnum = document.getElementById("ccnum").value;
-        var expyear = document.getElementById("expyear").value;
-        var cvv = document.getElementById("cvv").value;
-        var item = document.getElementById("item").value;
-        var total = document.getElementById("total").value;
-
-        //Test to ensure that the user has entered both a make and model
-        if (name !== "" && email !== "") {
-            //Insert the user entered details into the cars table, note the use of the ? placeholder, these will replaced by the data passed in as an array as the second parameter
-            mydb.transaction(function (t) {
-                t.executeSql("INSERT INTO help (name, email, adr, zip, card, cname, ccnum, expyear, cvv, item, total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [name, email, adr, zip, card, cname, ccnum, expyear, cvv, item, total]);
-            });
-        } else {
-            alert("There is a field left empty, try again!");
-        }
-    } else {
-        alert("db not found, your browser does not support web sql!");
-    }
+  async function init() {
+  db = await idb.openDb('ordersDb', 1, db => {
+    db.createObjectStore('orders', {keyPath: 'id', autoIncrement:true});
+  });
+  }
+  async function Insert(){
+    let total = document.getElementById("total").value;
+    let name = document.getElementById("name").value;
+    let tx = db.transaction('orders', 'readwrite');
+    await tx.objectStore('orders').add({name, total});
+    await list();
   } 
-  function help(){
+
+  async function list() {
+  let tx = db.transaction('orders');
+  let checkoutform = tx.objectStore('orders');
+
+  let orders = await checkoutform.getAll();
+}
+
+function calculate(){
+  let total = document.getElementById("originalcost").value;
+  let quantity = document.getElementById("quantity").value;
+  let sum = total * quantity;
+  document.getElementById("total").value = sum;
+}
+
+function help(){
     if(typeof(localStorage) != "undefined"){
+        var name = document.forms["form"]["name"].value;
+        var email = document.forms["form"]["email"].value;
+        var adr = document.forms["form"]["adr"].value;
+        var zip = document.forms["form"]["zip"].value;
+        var cname = document.forms["form"]["cname"].value;
+        var ccnum = document.forms["form"]["ccnum"].value;
+        var expyear = document.forms["form"]["expyear"].value;
+        var cvv = document.forms["form"]["cvv"].value;
+        var quantity = document.forms["form"]["quantity"].value;
+        if (name == null || name == "", email == null || email == "", adr == null || adr == "", 
+        zip == null || zip == "", cname == null || cname == "", ccnum == null || ccnum == "", 
+        expyear == null || expyear == "", cvv == null || cvv == "", quantity == null || quantity == "") {
+        return false;
+        }
+        else{
         localStorage.name = document.getElementById("name").value;
         localStorage.email = document.getElementById("email").value;
         localStorage.adr = document.getElementById("adr").value;
@@ -141,8 +151,11 @@
         localStorage.expyear = document.getElementById("expyear").value;
         localStorage.card = document.getElementById("card").value;
         localStorage.item = document.getElementById("item").value;
+        localStorage.quantity = document.getElementById("quantity").value;
         localStorage.total = document.getElementById("total").value;
+        }
     }
     document.getElementById("form").submit();
+    
   }
 </script>
