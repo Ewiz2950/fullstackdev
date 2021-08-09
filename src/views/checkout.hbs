@@ -79,7 +79,7 @@
       {{!-- Will be currently empty if nothing and have items if something there --}}
       <input class="form-control" type="text" id="item" name="item" value="Thinkpad Laptop" readonly></input>
       <h4>Quantity</h4>
-      <input class="form-control" type="number" id="quantity" name="quantity" value="1" min="1" max="1"  onchange="calculate()" required></input>
+      <input class="form-control" type="number" id="quantity" name="quantity" value="0" min="1" onchange="calculate()" required></input>
       <img class="card-img-top p-5" src="/images/laptop.png" id="laptopimage">
       <input class="form-control" type="number" id="originalcost" name="originalcost" value="100" style="color:black" readonly></input>
       <hr>
@@ -151,7 +151,6 @@ function help(){
         expyear == null || expyear == "", cvv == null || cvv == "", quantity == null || quantity == "") {
         return false;
         }
-        else{
         localStorage.name = document.getElementById("name").value;
         localStorage.email = document.getElementById("email").value;
         localStorage.adr = document.getElementById("adr").value;
@@ -163,9 +162,6 @@ function help(){
         localStorage.item = document.getElementById("item").value;
         localStorage.quantity = document.getElementById("quantity").value;
         localStorage.total = document.getElementById("total").value;
-        }
     }
-    document.getElementById("form").submit();
-    
   }
 </script>
