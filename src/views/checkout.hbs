@@ -77,11 +77,17 @@
     <div class="container">
       <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i></span></h4>
       {{!-- Will be currently empty if nothing and have items if something there --}}
-      <input class="form-control" type="text" id="item" name="item" value="Thinkpad Laptop" readonly></input>
+      
+      <select class="form-control" type="text" id="item" name="item" onclick="imageDisplay()">
+      <option value="Thinkpad Laptop">Thinkpad Laptop</option>
+      <option value="sylas">sylas</option>
+      </select>
+      </br>
+
+      <input class="form-control" type="number" id="originalcost" name="originalcost" value="100" style="color:black" readonly></input>
+      <img class="card-img-top p-5" src="/images/ipadMini.png" id="image">
       <h4>Quantity</h4>
       <input class="form-control" type="number" id="quantity" name="quantity" value="0" min="1" onchange="calculate()" required></input>
-      <img class="card-img-top p-5" src="/images/laptop.png" id="laptopimage">
-      <input class="form-control" type="number" id="originalcost" name="originalcost" value="100" style="color:black" readonly></input>
       <hr>
       <h4>Total</h4>
       <input class="form-control" type="number" id="total" name="total" value="100" style="color:black" readonly required></input>
@@ -94,8 +100,10 @@
   calculate();
   let db;
   init();
+
+
   function submitForm(){
-    help();
+    formsubmit();
     Insert();
   }
   async function init() {
@@ -135,7 +143,20 @@ function calculate(){
   document.getElementById("total").value = sum;
 }
 
-function help(){
+function imageDisplay(){
+var selecteditem = document.getElementById("item").value;
+if (selecteditem == "Thinkpad Laptop")
+{
+  document.getElementById("originalcost").value = "100";
+}
+
+else if (selecteditem == "sylas")
+{
+  document.getElementById("originalcost").value = "866";
+}
+ }
+
+function formsubmit(){
     if(typeof(localStorage) != "undefined"){
         var name = document.forms["form"]["name"].value;
         var email = document.forms["form"]["email"].value;
