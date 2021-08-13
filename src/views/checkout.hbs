@@ -39,7 +39,7 @@
             {{!-- Available credit cards to use with image --}}
             <label for="fname">Accepted Cards</label>
             <select class="form-select" id="card" name="card" required />
-            <option value="">-- Select an option --</option>
+            <option value="" selected disabled hidden>Select an option</option>
             <option class="fa fa-cc-visa" value="Visa" style="color:blue;">Visa</option>
             <option class="fa fa-cc-mastercard" value="Mastercard" style="color:red;" value="Mastercard">Mastercard</option>
             </select>
@@ -52,9 +52,8 @@
             <input class="form-control" type="text" id="cname" name="cname" required />
             
             <label for="ccnum">Credit card number*</label>
-            <input class="form-control" 
-            type="text" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-            pattern="\d*" minlength="3" maxlength="3" onkeypress='return formats(this,event)' onkeyup="return numberValidation(event)" id="ccnum" name="ccnum" placeholder="Example: 1111-2222-3333-4444" required />
+            <input class="cc-number"
+            type="text" onkeypress='return formats(this,event)' onkeyup="return numberValidation(event)" id="ccnum" name="ccnum" placeholder="Example: 1111-2222-3333-4444" required />
                         
             <div class="row">
               <div class="col-50">
@@ -79,16 +78,18 @@
       <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i></span></h4>
       {{!-- Will be currently empty if nothing and have items if something there --}}
       
-      <select class="form-control" type="text" id="item" name="item" onclick="imageDisplay()">
+      <select class="form-select" id="item" name="item" onclick="imageDisplay()" required />
+      <option value="" selected disabled hidden>Choose an item</option>
       <option value="Thinkpad Laptop">Thinkpad Laptop</option>
       <option value="Ipad Mini">Ipad Mini</option>
+      <option value="Panosonic Fridge">Panosonic Econavi Invertor Refridgerator</option>
       </select>
       </br>
 
-      <input class="form-control" type="number" id="originalcost" name="originalcost" value="100" style="color:black" readonly></input>
-      <img class="card-img-top p-5" src="/images/laptop.png" id="image">
+      <input class="form-control" type="number" id="originalcost" name="originalcost" value="0" style="color:black" readonly></input>
+      <img class="card-img-top p-5" src="" id="image">
       <h4>Quantity</h4>
-      <input class="form-control" type="number" id="quantity" name="quantity" value="0" min="1" onchange="calculate()" required></input>
+      <input class="form-control" type="number" id="quantity" name="quantity" value="0" min="1" onmouseover="calculate()" required></input>
       <hr>
       <h4>Total</h4>
       <input class="form-control" type="number" id="total" name="total" value="100" style="color:black" readonly required></input>
@@ -148,12 +149,13 @@ function formats(ele,e){
         if(ele.value.length<19){
           ele.value= ele.value.replace(/\W/gi, '').replace(/(.{4})/g, '$1 ');
           return true;
-        }else{
+        }
+        else{
           return false;
         }
-      }
+}
       
-      function numberValidation(e){
+function numberValidation(e){
         e.target.value = e.target.value.replace(/[^\d ]/g,'');
         return false;
 }
@@ -171,6 +173,15 @@ else if (selecteditem == "Ipad Mini")
   document.getElementById("originalcost").value = "866";
   document.getElementById("image").src="/images/ipadMini.png";
 }
+
+else if (selecteditem == "Panosonic Fridge")
+{
+  document.getElementById("originalcost").value = "755";
+  document.getElementById("image").src="/images/Panosonic Econavi Invertor Refridgerator.png";
+}
+else if (selecteditem == "nope"){
+  document.getElementById("originalcost").value = "0";
+}
  }
 
 function formsubmit(){
@@ -184,11 +195,13 @@ function formsubmit(){
         var expyear = document.forms["form"]["expyear"].value;
         var cvv = document.forms["form"]["cvv"].value;
         var quantity = document.forms["form"]["quantity"].value;
+        var item = document.forms["form"]["item"].value;
         if (name == null || name == "", email == null || email == "", adr == null || adr == "", 
         zip == null || zip == "", cname == null || cname == "", ccnum == null || ccnum == "", 
-        expyear == null || expyear == "", cvv == null || cvv == "", quantity == null || quantity == "") {
+        expyear == null || expyear == "", cvv == null || cvv == "", quantity == null || quantity == "", item == null || item == "") {
         return false;
         }
+
         localStorage.name = document.getElementById("name").value;
         localStorage.email = document.getElementById("email").value;
         localStorage.adr = document.getElementById("adr").value;
@@ -200,6 +213,7 @@ function formsubmit(){
         localStorage.item = document.getElementById("item").value;
         localStorage.quantity = document.getElementById("quantity").value;
         localStorage.total = document.getElementById("total").value;
+        localStorage.item = document.getElementById("item").value;
     }
   }
 </script>
