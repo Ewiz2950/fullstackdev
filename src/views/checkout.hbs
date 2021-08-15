@@ -105,30 +105,13 @@
 
   function submitForm(){
     formsubmit();
-    Insert();
   }
   async function init() {
   db = await idb.openDb('ordersDb', 1, db => {
     db.createObjectStore('orders', {keyPath: 'id', autoIncrement:true});
-  });
+    });
   }
-  async function Insert(){
-    let name = document.getElementById("name").value;
-    let email = document.getElementById("email").value;
-    let adr = document.getElementById("adr").value;
-    let zip = document.getElementById("zip").value;
-    let cname = document.getElementById("cname").value;
-    let ccnum = document.getElementById("ccnum").value;
-    let card = document.getElementById("card").value;
-    let expyear = document.getElementById("expyear").value;
-    let cvv = document.getElementById("cvv").value;
-    let item = document.getElementById("item").value;
-    let quantity = document.getElementById("quantity").value;
-    let total = document.getElementById("total").value;
-    let tx = db.transaction('orders', 'readwrite');
-    await tx.objectStore('orders').add({name, email, adr, zip, cname, ccnum, card, expyear, cvv, item, quantity, total});
-    await list();
-  } 
+
 
   async function list() {
   let tx = db.transaction('orders');
@@ -183,7 +166,7 @@ else if (selecteditem == "nope"){
 }
  }
 
-function formsubmit(){
+async function formsubmit(){
     if(typeof(localStorage) != "undefined"){
         var name = document.forms["form"]["name"].value;
         var email = document.forms["form"]["email"].value;
@@ -197,8 +180,28 @@ function formsubmit(){
         var item = document.forms["form"]["item"].value;
         if (name == null || name == "", email == null || email == "", adr == null || adr == "", 
         zip == null || zip == "", cname == null || cname == "", ccnum == null || ccnum == "", 
-        expyear == null || expyear == "", cvv == null || cvv == "", quantity == null || quantity == "", item == null || item == "") {
+        expyear == null || expyear == "", cvv == null || cvv == "", quantity == null || quantity == "", item == null || item == "") 
+        {
         return false;
+        }
+
+        else
+        {
+          let name = document.getElementById("name").value;
+          let email = document.getElementById("email").value;
+          let adr = document.getElementById("adr").value;
+          let zip = document.getElementById("zip").value;
+          let cname = document.getElementById("cname").value;
+          let ccnum = document.getElementById("ccnum").value;
+          let card = document.getElementById("card").value;
+          let expyear = document.getElementById("expyear").value;
+          let cvv = document.getElementById("cvv").value;
+          let item = document.getElementById("item").value;
+          let quantity = document.getElementById("quantity").value;
+          let total = document.getElementById("total").value;
+          let tx = db.transaction('orders', 'readwrite');
+          await tx.objectStore('orders').add({name, email, adr, zip, cname, ccnum, card, expyear, cvv, item, quantity, total});
+          await list();
         }
 
         localStorage.name = document.getElementById("name").value;
@@ -213,6 +216,8 @@ function formsubmit(){
         localStorage.quantity = document.getElementById("quantity").value;
         localStorage.total = document.getElementById("total").value;
         localStorage.item = document.getElementById("item").value;
+
+        
     }
   }
 </script>
