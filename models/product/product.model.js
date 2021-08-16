@@ -1,7 +1,7 @@
 const connection = require('../../config/connection.js')
 
 // constructor
-const Product = function(product) {
+const Product = function (product) {
   this.id = product.id;
   this.quantity = product.quantity;
   this.brand = product.brand;
@@ -22,18 +22,29 @@ Product.create = (product, result) => {
     }
     result(null, product.id);
   });
-}; 
+};
 
 Product.getAll = (filters, result) => {
-  connection.query("SELECT * FROM product WHERE ?", filters, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(null, err);
-      return;
-    }
-
-    result(null, res);
-  });
+  if (Object.keys(filters).length !== 0) {
+    connection.query("SELECT * FROM product WHERE ?", filters, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      result(null, res);
+    })
+  } else {
+    connection.query("SELECT * FROM product", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        console.log(res);
+        return;
+      }
+      result(null, res);
+    })
+  }
 };
 
 Product.findById = (productId, result) => {
@@ -41,7 +52,7 @@ Product.findById = (productId, result) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
-      return; 
+      return;
     }
 
     if (res.length) {
@@ -50,7 +61,9 @@ Product.findById = (productId, result) => {
     }
 
     // not found Product with the id
-    result({ status: "not_found" }, null);
+    result({
+      status: "not_found"
+    }, null);
   });
 };
 
@@ -58,8 +71,9 @@ Product.updateById = (id, product, result) => {
   connection.query(
     `UPDATE product SET name = ?, description = ?, price = ?, category = ?, 
      subCategory = ?, promotion = ? WHERE id = ?`,
-    [product.name, product.description, product.price, product.category, 
-     product.subCategory, product.promotion],
+    [product.name, product.description, product.price, product.category,
+      product.subCategory, product.promotion
+    ],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -69,36 +83,52 @@ Product.updateById = (id, product, result) => {
 
       if (res.affectedRows == 0) {
         // not found Product with the id
-        result({ "status": "not_found" }, null);
+        result({
+          "status": "not_found"
+        }, null);
         return;
       }
 
-      console.log("updated product: ", { id: id, product });
-      result(null, { id: id, product });
+      console.log("updated product: ", {
+        id: id,
+        product
+      });
+      result(null, {
+        id: id,
+        product
+      });
     }
   );
 };
 
 Product.setListing = (id, product, listing, result) => {
-    connection.query(
-      "UPDATE product SET listing = ? WHERE product_id = ?", listing,
-      (err, res) => {
-        if (err) {
-          console.log("error: ", err);
-          result(null, err);
-          return;
-        }
-  
-        if (res.affectedRows == 0) {
-          // not found Product with the id
-          result({ status: "not_found" }, null);
-          return;
-        }
-  
-        console.log("updated product: ", { id: id, product });
-        result(null, { id: id, product });
+  connection.query(
+    "UPDATE product SET listing = ? WHERE product_id = ?", listing,
+    (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
       }
-    );
-  };
+
+      if (res.affectedRows == 0) {
+        // not found Product with the id
+        result({
+          status: "not_found"
+        }, null);
+        return;
+      }
+
+      console.log("updated product: ", {
+        id: id,
+        product
+      });
+      result(null, {
+        id: id,
+        product
+      });
+    }
+  );
+};
 
 module.exports = Product;

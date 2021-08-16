@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
 router.get('/product/:productId', function (req, res, next) {
 
     fetch("http://localhost:5000/search/product?id=" + req.params.productId, {
-                method: "GET",
+        method: "GET",
      })
     .then(response => response.json())
     .then(response => {

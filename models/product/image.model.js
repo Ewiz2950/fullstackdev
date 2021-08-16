@@ -4,6 +4,7 @@ const connection = require('../../config/connection.js')
 const Image = function(image) {
   this.id = image.id;
   this.imageName = image.imageName;
+  this.variant_id = image.variant_id;
 };
 
 Image.create = (image, result) => {
@@ -18,9 +19,9 @@ Image.create = (image, result) => {
   });
 };
 
-Image.findById = (imageId, result) => {
+Image.findByVariantId = (variantId, result) => {
   connection.query(
-    "SELECT * FROM image WHERE id = ?", imageId,
+    "SELECT * FROM image WHERE variant_id = ?", variantId,
     (err, res) => {
     if (err) {
       console.log("error: ", err);
@@ -28,7 +29,7 @@ Image.findById = (imageId, result) => {
       return;
     }
     if (res.length > 0) {
-      result(null, res[0].imageName);
+      result(null, res);
       return;
     }
 

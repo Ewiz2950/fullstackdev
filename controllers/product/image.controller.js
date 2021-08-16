@@ -10,36 +10,36 @@ exports.create = (req) => {
 
   let promises = [];
 
-  req.forEach(imageName => {
-    promises.push(new Promise((resolve, reject) => {
-      // Create a Image
-      const image = new Image({
-        imageName: imageName,
-        id: uuidv4()
-      });
-
-      // Save Image in the database
-      Image.create(image, (err, data) => {
-        if (err) reject(err)
-        else resolve(data);
-      });
-    }))
+  req.forEach(variant => {
+    variant.images.forEach(imageName => {
+      promises.push(new Promise((resolve, reject) => {
+        // Create a Image
+        const image = new Image({
+          imageName: imageName,
+          variant_id: variant.id,
+          id: uuidv4()
+        });
+  
+        // Save Image in the database
+        Image.create(image, (err, data) => {
+          if (err) reject(err)
+          else resolve(data);
+        });
+      }))
+    })
   });
   return Promise.all(promises);
 }
 
-exports.findById = (images) => {
-  if (!images) {
+exports.findByVariantId = (variantId) => {
+  if (!variantId) {
     return new Promise((resolve, reject) => {
       reject('Empty content.')
     })
   };
 
-  let promises = [];
-
-  images.forEach(imageId => {
-    promises.push(new Promise((resolve, reject) => {
-      Image.findById(imageId.imageId, (err, data) => {
+  return new Promise((resolve, reject) => {
+      Image.findByVariantId(variantId, (err, data) => {
         if (err) {
           if (err.status === "not_found") {
             reject({ status: "not_found" })
@@ -48,8 +48,5 @@ exports.findById = (images) => {
           }
         } else resolve(data);
       });
-    }))
-  })
-
-  return Promise.all(promises)
+    })
 };

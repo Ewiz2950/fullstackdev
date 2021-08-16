@@ -59,10 +59,10 @@
             <div class="product-card col">
               <a href="/product/{{{id}}}" class="text-dark">
                 <div class="card border-0">
-                  <div class="productImage"><img class="card-img-top p-4" src="/uploads/{{{variants.[0].images.[0]}}}" alt="Product Image"></img></div>
+                  <div class="productImage"><img class="card-img-top p-4" src="/uploads/{{{variants.[0].images.[0].imageName}}}" alt="Product Image"></img></div>
                   <div class="card-body">
                     <p class="card-title p m-0">{{{brand}}}</p>
-                    <p class="card-text mb-0">{{{variant.[0].name}}}</p>
+                    <p class="card-text mb-0">{{{variants.[0].name}}}</p>
                     <p class="card-text py-4">${{{price}}}</p>
                     {{#if hasVariant}}
                     <a href="/product/{{{id}}}" class="btn btn-primary"><i class="bi bi-list-ul"></i> Select variant</a>

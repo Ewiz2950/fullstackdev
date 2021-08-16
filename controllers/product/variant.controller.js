@@ -1,9 +1,9 @@
 const {v4: uuidv4} = require('uuid');
 const Variant = require("../../models/product/variant.model.js");
 
-exports.create = (req) => {
+exports.create = (variant, id) => {
 
-  if (!req) {
+  if (!variant) {
     return new Promise((resolve, reject) => {
       reject('Empty content.')
     })
@@ -11,14 +11,16 @@ exports.create = (req) => {
 
   let promises = [];
 
-  req.forEach(variants => {
+  variant.forEach(variants => {
     promises.push(new Promise((resolve, reject) => {
 
       // Create a Variant
       const variant = new Variant({
         name: variants.name,
         id: uuidv4(),
-        quantity: variants.quantity
+        product_id: id,
+        quantity: variants.quantity,
+        imageField: variants.imageField
       });
 
       // Save Variant in the database
@@ -49,4 +51,18 @@ exports.findById = (variantIds) => {
   })
 
   return Promise.all(promises);
+};
+
+exports.findByProductId = (productId) => {
+    return new Promise((resolve, reject) => {
+      Variant.findByProductId(productId, (err, data) => {
+        if (err) {
+          if (err.status === "not_found") {
+            resolve()
+          } else {
+            reject(err)
+          }
+        } else resolve(data);
+      });
+    })
 };

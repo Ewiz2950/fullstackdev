@@ -97,6 +97,10 @@ function addVariant(number) {
     input.setAttribute("class", "form-control mb-3 imageUpload" + number);
     input.setAttribute("id", "variantName" + number);
     input.setAttribute("name", `variant[${number}][name]`);
+    var hidden = document.createElement('input');
+    hidden.setAttribute("type", "hidden");
+    hidden.setAttribute("name", `variant[${number}][imageField]`);
+    hidden.setAttribute("value", "variantImage" + number);
     var inputFile = document.createElement('input');
     inputFile.setAttribute("type", "file");
     inputFile.setAttribute("id", "variantImage" + number);
@@ -132,6 +136,7 @@ function addVariant(number) {
     div.appendChild(deleteVariant);
     div.appendChild(label);
     div.appendChild(input);
+    div.appendChild(hidden);
     div.appendChild(labelQuantity);
     div.appendChild(inputQuantity);
     div.appendChild(inputFile);

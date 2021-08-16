@@ -35,21 +35,10 @@ connection.connect((err) => {
             }
         });
 
-        connection.query(schema.variantImage, function (err, results, fields) {
-            if (err) {
-                console.log("6 " + err.message);
-            }
-        });
-        
-        connection.query(schema.productVariant, function (err, results, fields) {
-            if (err) {
-                console.log("7 " + err.message);
-            }
-        });
 
         connection.query(schema.createReceipt, function (err, results, fields) {
             if (err) {
-                console.log("8 " + err.message);
+                console.log("6 " + err.message);
             }
         });
     }

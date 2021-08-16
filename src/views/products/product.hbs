@@ -29,7 +29,7 @@
                             <li>
                             <label>
                                 <input type="radio" name="variant" value="{{{this.id}}}">
-                                <img class="swatch border rounded" src="/uploads/{{{this.images.[0]}}}"></img> 
+                                <img class="swatch border rounded" src="/uploads/{{{this.images.[0].imageName}}}"></img> 
                             </label>
                             </li>
                             {{/each}}
@@ -109,7 +109,7 @@
 <script>
     function replace(response, index) {
         document.getElementById('product-name').textContent = response.variants[index].name;
-        document.getElementById('main-img').src = `/uploads/${response.variants[index].images[0]}`;
+        document.getElementById('main-img').src = `/uploads/${response.variants[index].images[0].imageName}`;
         var div = document.createElement('div');
         div.setAttribute('id', 'variant-img');
         div.setAttribute('class', 'row g-0');
@@ -118,7 +118,7 @@
             divcol.setAttribute('id', 'variant-img');
             divcol.setAttribute('class', 'col-3');
             var img = document.createElement('img');
-            img.setAttribute('src', `/uploads/${image}`);
+            img.setAttribute('src', `/uploads/${image.imageName}`);
             img.setAttribute('class', 'card-img');
             img.setAttribute('alt', 'product');
             divcol.append(img);
