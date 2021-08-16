@@ -1,0 +1,74 @@
+<script src="https://cdn.jsdelivr.net/npm/idb@3.0.2/build/idb.min.js"></script>
+<style>
+    #header{
+        font-size: 70px;
+        text-align: center;
+    }
+
+    #listElem{
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+        letter-spacing: 1px;
+        font-size: 25px;
+    }
+
+    .button{
+        text-align: center;
+        font-size: 30px;
+    }
+</style>
+
+<p id="header">List of orders</p>
+<ul id="listElem"></ul>
+<div class="button">
+<button onclick="clearOrders()">Clear An Order</button>
+<button onclick="clearAllOrders()">Clear All Orders</button>
+</div>
+<script>
+let db;
+
+init();
+
+async function init() {
+  db = await idb.openDb('ordersDb', 1, db => {
+    db.createObjectStore('orders', {keyPath: 'id', autoIncrement:true});
+  });
+
+  list();
+}
+
+async function list() {
+  let tx = db.transaction('orders');
+  let checkoutform = tx.objectStore('orders');
+
+  let orders = await checkoutform.getAll();
+
+  if (orders.length) {
+    listElem.innerHTML = orders.map(orders => `<li>
+        id: ${orders.id} , Name: ${orders.name} , Email: ${orders.email} , Adr: ${orders.adr} , Zip: ${orders.zip} ,
+        Card Type: ${orders.card} , Card Name: ${orders.cname} , Card Number: ${orders.ccnum} , expyear: ${orders.expyear} ,
+        Item: ${orders.item} , Quantity: ${orders.quantity} , Total Cost(in SGD): $${orders.total}
+      </li>`).join('');
+  } else {
+    listElem.innerHTML = '<li>No orders currently</li>'
+  }
+}
+
+async function clearOrders() {
+  let tx = db.transaction('orders', 'readwrite');
+  let idToDelete = +prompt("Which Id do you want to delete?");
+  await tx.objectStore('orders').delete(idToDelete);
+  await list();
+}
+
+async function clearAllOrders() {
+  let tx = db.transaction('orders', 'readwrite');
+  let deleteAll = +prompt("Delete all orders? Input anything to confirm decision")
+  await tx.objectStore('orders').clear();
+  await list();
+}
+
+window.addEventListener('unhandledrejection', event => {
+  alert("Error: " + event.reason.message);
+});
+
+</script>

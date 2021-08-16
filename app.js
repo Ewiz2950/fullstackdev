@@ -5,6 +5,7 @@ const flash = require('connect-flash');
 var session = require('express-session');
 var db = require('./config/db.js');
 
+
 // register helpers
 const helpers = require('./dist/helpers/helpers');
 

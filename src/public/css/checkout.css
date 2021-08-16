@@ -20,6 +20,10 @@ padding: 60px;
 font-size: 20px;
 }
 
+#originalcost{
+  width: 150px;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -53,11 +57,11 @@ font-size: 20px;
   padding: 0 16px;
 }
 
-.container {
+.containeer {
   background-color: #f2f2f2;
   padding: 5px 20px 15px 20px;
   border: 1px solid lightgrey;
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 input[type=text] {
@@ -107,3 +111,6 @@ span.price {
     margin-bottom: 20px;
   }
 }
+
+
+

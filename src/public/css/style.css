@@ -182,6 +182,24 @@
 
 /* Product Page */
 
+#productPage .variant ul{list-style:none; padding:0; margin: 0;}
+
+#productPage .variant li{margin: 0 20px 0 0; display: inline-block;}
+
+#productPage .variant label{cursor: pointer;}
+
+#productPage .variant input{display:none;}
+
+#productPage .variant input[type="radio"]:checked ~ .swatch {border: 1px solid #000000 !important}
+
+#productPage .swatch{
+  display:inline-block;
+  vertical-align: middle;
+  height: 50px;
+  width:px;
+  margin: 0 5px 0 0 ;
+}
+
 #productPage .product-card a {
   text-decoration: none;
 }

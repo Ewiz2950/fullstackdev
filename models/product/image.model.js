@@ -1,4 +1,4 @@
-const connection = require('../config/connection.js')
+const connection = require('../../config/connection.js')
 
 // constructor
 const Image = function(image) {
@@ -13,18 +13,27 @@ Image.create = (image, result) => {
       result(err, null);
       return;
     }
-    result(null, { id: image.id, imageName: image.imageName });
+
+    result(null, image.id);
   });
 };
 
-Image.findByVariant = (variantId, result) => {
-  connection.query("SELECT variant_id, image FROM image WHERE variant_id = ?", variantId, (err, res) => {
+Image.findById = (imageId, result) => {
+  connection.query(
+    "SELECT * FROM image WHERE id = ?", imageId,
+    (err, res) => {
     if (err) {
       console.log("error: ", err);
-      result(null, err);
+      result(err, null);
       return;
     }
-    result(null, res);
+    if (res.length > 0) {
+      result(null, res[0].imageName);
+      return;
+    }
+
+    // not found Variant with the id
+    result({ status: "not_found" }, null);
   });
 };
 

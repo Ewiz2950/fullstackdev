@@ -3,6 +3,7 @@
         font-size: 25px;
         line-height: 200%;
         padding: 40px;
+        font-family: Arial, Helvetica, sans-serif;
     }
     .intro{
         text-align: center;
@@ -30,6 +31,7 @@ Credit Card Name: <span id="cname"></span><br>
 Credit Card Number: <span id="ccnum"></span><br>
 Credit Card expiring Year and Month: <span id="expyear"></span><br>
 Item: <span id="item"></span><br>
+Quantity: <span id="quantity"></span><br>
 Total: <span id="total"></span>
 </div>
 <form action="http://localhost:5000/">
@@ -47,6 +49,7 @@ Total: <span id="total"></span>
         document.getElementById("card").innerHTML = localStorage.card;
         document.getElementById("expyear").innerHTML = localStorage.expyear;
         document.getElementById("item").innerHTML = localStorage.item;
+        document.getElementById("quantity").innerHTML = localStorage.quantity;
         document.getElementById("total").innerHTML = localStorage.total;
 
     }

@@ -2,16 +2,12 @@ var express = require('express');
 var router = express.Router();
 var templates = require('../dist/views/templates.js');
 
-
-// Checkout Page
+// Receipt Page
 router.get('/', function (req, res, next) {
     var data = {
-        body: templates.checkout(),
+        body: templates.orders(),
     };
+
     res.send(templates.main(data));
 });
-
-// router.post('receipt', function (req, res, next){
-//     res.redirect('/views/index')
-// });
 module.exports = router;

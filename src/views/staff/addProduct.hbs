@@ -7,28 +7,18 @@
             <div class="row">
                 <div class="col-lg-8 mb-5">
                     <div class="rounded border p-4">
-                        <label for="productName" class="form-label head">Name</label>
-                        <input type="text" class="form-control mb-3" id="productName" name="product[name]" required>
-                        <input type="file" id="productImage" class="imageUpload" name="productImage"
-                            accept="image/png, image/jpeg" multiple>
-                        <div class="row g-0">
-                            <label for="productImage" class="custom-file-upload imageUpload border rounded me-3 mb-3"></label>
-                            <label for="productImage" class="custom-file-upload imageUpload border rounded me-3 mb-3"></label>
-                            <label for="productImage" class="custom-file-upload imageUpload border rounded me-3 mb-3"></label>
-                        </div>
-                        <div id="imageUpload" class="form-text"></div>
-                        <label for="description" class="form-label head mt-3">Description</label>
-                        <textarea class="form-control mb-3" id="description" name="product[description]" rows="5" style="resize:none" required></textarea>
                         <label for="productBrand" class="form-label head">Brand</label>
                         <input type="text" class="form-control mb-3" name="product[brand]" id="productBrand" required>
-                        <div class="col-md-5">
-                                <label for="productQuantity" class="form-label head">Quantity</label>
-                                <input type="number" class="form-control mb-3" name="product[quantity]" id="productQuantity" step="1" min="1" required>
-                            </div>
+                        <label for="description" class="form-label head mt-3">Description</label>
+                        <textarea class="form-control mb-3" id="description" name="product[description]" rows="5"
+                            style="resize:none" required></textarea>
+                        <input type="hidden" class="form-control mb-3 inputQuantity" name="product[quantity]"
+                            id="productQuantity">
                         <div class="row">
                             <div class="col-md-3">
                                 <label for="productPrice" class="form-label head">Price</label>
-                                <input type="number" class="form-control mb-3" name="product[price]" id="productPrice" step="0.05" min="0.05" required>
+                                <input type="number" class="form-control mb-3" name="product[price]" id="productPrice"
+                                    step="0.01" min="0.05" required>
                             </div>
                             <div class="col-md-4">
                                 <label for="promotion" class="form-label head">Promotion</label>
@@ -60,16 +50,30 @@
                 </div>
                 <div class="col-md-4">
                     <div class="variants" id="variantList">
-                    <div class="rounded border p-3 mb-4">
-                        <div class="row">
-                            <h5 class="col" style="padding-top:0.375rem">Variants</h5>
-                            <button class="col btn btn-link text-end border-0" id="addVariant">Add Variant</button>
+                        <div class="rounded border p-3 mb-4">
+                            <div class="row">
+                                <h5 class="col" style="padding-top:0.375rem">Variants</h5>
+                                <button class="col btn btn-link text-end border-0" id="addVariant">Add Variant</button>
+                            </div>
+                        </div>
+                        <div class="rounded border p-3 mb-4">
+                            <label for="variantName0" class="form-label head">Variant Name</label>
+                            <input type="text" class="form-control mb-3 imageUpload0" id="variantName" name="variant[0][name]" required>
+                            <label for="variantQuantity0" class="form-label head">Quantity</label>
+                            <input type="number" min="1" step="1" class="form-control mb-3 inputQuantity variantQuantity" id="variantQuantity0" name="variant[0][quantity]" required>
+                            <input type="file" id="variantImage0" class="variantImageUpload0" name="variantImage0" accept="image/png, image/jpeg" multiple="">
+                            <div>
+                                <label for="variantImage0" class="custom-file-upload border rounded me-3 mb-3 variant variantImageUpload0" style="width: 112px; height: 76.5px; background-size: 100% 100%;"></label>
+                                <label for="variantImage12" class="custom-file-upload border rounded me-3 mb-3 variant variantImageUpload0" style="width: 112px; height: 76.5px; background-size: 100% 100%;"></label>
+                                <label for="variantImage12" class="custom-file-upload border rounded me-3 mb-3 variant variantImageUpload0" style="width: 112px; height: 76.5px; background-size: 100% 100%;"></label>
+                            </div>
+                            <div id="variantImageUpload0"></div>
                         </div>
                     </div>
-                </div>
-                <button type="submit" class="btn btn-primary float-end"></i> Add Product</button>
+                    <button type="submit" class="btn btn-primary float-end"></i> Add Product</button>
                 </div>
             </div>
         </form>
     </div>
 </main>
+<script src="/js/productForm.js"></script>
