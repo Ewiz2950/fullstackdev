@@ -4,19 +4,19 @@ const connection = require('../config/connection.js')
 const Review = function(review) {
     this.review_id = review.review_id
     this.product_id = review.product_id
-    this.review_star = review.review_star
-    this.review_text = review.review_text
+    this.reviewStar = review.reviewStar
+    this.reviewText = review.reviewText
 };
 
 Review.create = (review, result) => {
     connection.query("INSERT INTO review SET ?", review, (err, res) => {
       if (err) {
         console.log("error: ", err);
-        result(err, null);
+        result = (err, null);
         return;
       }
-      console.log("created review: ", { review_id: review.review_id, product_id: review.product_id, review_star: review.review_star, review_text: review.review_text });
-      result(null, res);
+      console.log("created review: ", { review_id: review.review_id, product_id: review.product_id, reviewStar: review.reviewStar, reviewText: review.reviewText });
+      result = (res);
     });
   };
   
