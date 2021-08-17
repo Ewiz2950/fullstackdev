@@ -12,6 +12,7 @@ const helpers = require('./dist/helpers/helpers');
 // connecting app routes
 var indexRouter = require('./routes/index');
 var checkoutRouter = require('./routes/checkout');
+var searchRouter = require('./routes/search');
 var receiptRouter = require('./routes/receipt');
 var reviewRouter = require('./routes/review');
 var loginRouter = require('./routes/login');
@@ -37,6 +38,7 @@ app.use('/bootstrap', express.static(path.join(__dirname, "node_modules",
                                               
 app.use('/', indexRouter);
 app.use('/staff', staffRouter);
+app.use('/search', searchRouter);
 app.use('/checkout', checkoutRouter);
 app.use('/receipt', receiptRouter);
 app.use('/review', reviewRouter);
