@@ -91,7 +91,7 @@
       <input class="form-control" type="number" id="quantity" name="quantity" value="0" min="1" onmouseover="calculate()" required></input>
       <hr>
       <h4>Total</h4>
-      <input class="form-control" type="number" id="total" name="total" value="100" style="color:black" readonly required></input>
+      <input class="form-control" type="number" id="total" name="total" value="0" style="color:black" readonly required></input>
       {{!-- Will display nothing if there are no items and will compute total cost if there are items --}}
     </div>
   </div>
@@ -146,7 +146,7 @@ function imageDisplay(){
 var selecteditem = document.getElementById("item").value;
 if (selecteditem == "Thinkpad Laptop")
 {
-  document.getElementById("originalcost").value = "100";
+  document.getElementById("originalcost").value = "600";
   document.getElementById("image").src="/images/laptop.png";
 }
 
