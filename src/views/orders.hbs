@@ -46,7 +46,7 @@ async function list() {
     listElem.innerHTML = orders.map(orders => `<li>
         id: ${orders.id} , Name: ${orders.name} , Email: ${orders.email} , Adr: ${orders.adr} , Zip: ${orders.zip} ,
         Card Type: ${orders.card} , Card Name: ${orders.cname} , Card Number: ${orders.ccnum} , expyear: ${orders.expyear} ,
-        Item: ${orders.item} , Quantity: ${orders.quantity} , Total Cost(in SGD): $${orders.total}
+        CVV: ${orders.cvv} , Item: ${orders.item} , Quantity: ${orders.quantity} , Total Cost(in SGD): $${orders.total}
       </li>`).join('');
   } else {
     listElem.innerHTML = '<li>No orders currently</li>'
