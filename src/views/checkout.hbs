@@ -180,7 +180,7 @@ async function formsubmit(){
         var item = document.forms["form"]["item"].value;
         if (name == null || name == "", email == null || email == "", adr == null || adr == "", 
         zip == null || zip == "", cname == null || cname == "", ccnum == null || ccnum == "", 
-        expyear == null || expyear == "", cvv == null || cvv == "", quantity == null || quantity == "", item == null || item == "") 
+        expyear == null || expyear == "", cvv == null || cvv == "", quantity < 1 || quantity == 0, item == null || item == "") 
         {
         return false;
         }
