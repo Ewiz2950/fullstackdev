@@ -4,11 +4,25 @@ var router = express.Router();
 var templates = require('../dist/views/templates.js');
 
 router.get('/', function (req, res, next) {
-    var data = {
-        body: templates.index
-    };
-    res.send(templates.main(data));
-});
+    fetch("http://localhost:5000/search/products", {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({promotion: "Featured"})
+      })
+      .then(response => response.json())
+      .then(response => {
+          var data = {
+              body: templates.index({
+                products: response.slice(0, 4)
+              })
+          };
+          res.send(templates.main(data))
+      })
+      .catch(err => console.error(err))
+})
 
 router.get('/product/:productId', function (req, res, next) {
 

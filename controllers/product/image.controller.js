@@ -42,7 +42,27 @@ exports.findByVariantId = (variantId) => {
       Image.findByVariantId(variantId, (err, data) => {
         if (err) {
           if (err.status === "not_found") {
-            reject({ status: "not_found" })
+            resolve({ status: "not_found" })
+          } else {
+            reject(err)
+          }
+        } else resolve(data);
+      });
+    })
+};
+
+exports.deleteByVariantId = (variantId) => {
+  if (!variantId) {
+    return new Promise((resolve, reject) => {
+      reject('Empty content.')
+    })
+  };
+
+  return new Promise((resolve, reject) => {
+      Image.deleteByVariantId(variantId, (err, data) => {
+        if (err) {
+          if (err.status === "not_found") {
+            resolve({ status: "not_found" })
           } else {
             reject(err)
           }

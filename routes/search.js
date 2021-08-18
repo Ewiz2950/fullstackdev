@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const fetch = require("node-fetch");
 var templates = require('../dist/views/templates.js');
 
 const Product = require("../controllers/product/product.controller.js");
@@ -8,21 +9,36 @@ const Image = require("../controllers/product/image.controller.js");
 
 
 router.get('/', function (req, res, next) {
-    var data = {
-        body: templates.productGrid({
-            search: "Laptop"
-        })
-    };
+    let filters = {};
+    filters.search = req.query.q;
 
-    res.send(templates.main(data));
-});
+    fetch("http://localhost:5000/search/products", {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify(filters)
+    })
+    .then(response => response.json())
+    .then(response => {
+        var data = {
+            body: templates.productGrid({
+                products: response,
+                search: req.query.q
+            })
+        };
+        res.send(templates.main(data))
+    })
+})
 
 router.post('/products', function (req, res, next) {
     let filters = req.body;
+    let sort = filters.sort;
+    delete filters.sort;
 
     let product = Product.findAll(filters);
     let variants = product.then(result => {
-        console.log(result);
         let promises = [];
         result.forEach(product => {
             promises.push(Variant.findByProductId(product.id))
@@ -31,8 +47,8 @@ router.post('/products', function (req, res, next) {
     })
     let images = variants.then(result => {
         let promises = [];
-        result.forEach(variants => {
-            promises.push(Image.findByVariantId(variants[0].id))
+        result.forEach(v => {
+            promises.push(Image.findByVariantId(v[0].id))
         })
         return Promise.all(promises)
     })
@@ -48,6 +64,15 @@ router.post('/products', function (req, res, next) {
             return result[0]
         })
         .then((result) => {
+            if (sort == "AZ") {
+                result.sort((a, b) => a.brand.localeCompare(b.brand));
+            } else if (sort == "ZA") {
+                result.sort((a, b) => b.brand.localeCompare(a.brand));
+            } else if (sort == "LH") {
+                result.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+            } else if (sort == "HL") {
+                result.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+            }
             res.json(result);
         })
         .catch(err => console.error(err))

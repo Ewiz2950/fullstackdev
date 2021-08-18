@@ -21,6 +21,29 @@ Variant.create = (variant, result) => {
   });
 };
 
+Variant.updateById = (variant, result) => {
+  connection.query("UPDATE variant SET product_id = ?, name = ?, quantity = ? WHERE id = ?", 
+  [variant.product_id, variant.name, variant.quantity, variant.id], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    result(null, {[variant.imageField]: variant.id});
+  });
+};
+
+Variant.deleteById = (id, result) => {
+  connection.query("DELETE FROM variant WHERE id = ?", id, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    result(null, id);
+  });
+};
+
 
 Variant.findById = (variantId, result) => {
   connection.query(

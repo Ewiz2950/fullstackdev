@@ -3,6 +3,7 @@ const connection = require('../../config/connection.js')
 // constructor
 const Product = function (product) {
   this.id = product.id;
+  this.name = product.name;
   this.quantity = product.quantity;
   this.brand = product.brand;
   this.description = product.description;
@@ -11,6 +12,7 @@ const Product = function (product) {
   this.subcategory = product.subcategory;
   this.promotion = product.promotion;
   this.hasVariant = product.hasVariant;
+  this.imageName = product.imageName;
 };
 
 Product.create = (product, result) => {
@@ -25,8 +27,45 @@ Product.create = (product, result) => {
 };
 
 Product.getAll = (filters, result) => {
-  if (Object.keys(filters).length !== 0) {
-    connection.query("SELECT * FROM product WHERE ?", filters, (err, res) => {
+  if (filters.search) {
+    var search = filters.search;
+    delete filters.search;
+    if (Object.keys(filters).length > 0) {
+      var sql = "SELECT * FROM product WHERE";
+      for (var attribute in filters) {
+        sql += ` ${attribute} = '${filters[attribute]}' AND`
+      }
+      sql += " name LIKE ?";
+      connection.query(sql, ("%" + search + "%"), (err, res) => {
+        if (err) {
+          console.log("error: ", err);
+          result(null, err);
+          return;
+        }
+        result(null, res);
+      })
+    }
+    else {
+      connection.query("SELECT * FROM product WHERE name LIKE ?", ("%" + search + "%"), (err, res) => {
+        if (err) {
+          console.log("error: ", err);
+          result(null, err);
+          return;
+        }
+        result(null, res);
+      })
+    }
+  }
+  else if (Object.keys(filters).length !== 0) {
+    var sql = "SELECT * FROM product WHERE";
+    for (var attribute in filters) {
+      if (Object.keys(filters).indexOf(attribute) == Object.keys(filters).length - 1) {
+        sql += ` ${attribute} = '${filters[attribute]}'`
+      } else {
+        sql += ` ${attribute} = '${filters[attribute]}' AND`
+      }
+    }
+    connection.query(sql, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -34,7 +73,8 @@ Product.getAll = (filters, result) => {
       }
       result(null, res);
     })
-  } else {
+  }  
+  else {
     connection.query("SELECT * FROM product", (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -67,12 +107,13 @@ Product.findById = (productId, result) => {
   });
 };
 
-Product.updateById = (id, product, result) => {
+Product.updateById = (product, result) => {
   connection.query(
-    `UPDATE product SET name = ?, description = ?, price = ?, category = ?, 
-     subCategory = ?, promotion = ? WHERE id = ?`,
-    [product.name, product.description, product.price, product.category,
-      product.subCategory, product.promotion
+    `UPDATE product SET description = ?, price = ?, category = ?, 
+     subcategory = ?, promotion = ?, quantity = ?, brand = ?, hasVariant = ?, name = ? WHERE id = ?`,
+    [product.description, product.price, product.category,
+     product.subcategory, product.promotion, product.quantity, product.brand, product.hasVariant, product.name,
+     product.id
     ],
     (err, res) => {
       if (err) {
@@ -89,21 +130,38 @@ Product.updateById = (id, product, result) => {
         return;
       }
 
-      console.log("updated product: ", {
-        id: id,
-        product
-      });
-      result(null, {
-        id: id,
-        product
-      });
+      result(null, product.id);
     }
   );
 };
 
-Product.setListing = (id, product, listing, result) => {
+Product.updateImageById = (product, result) => {
   connection.query(
-    "UPDATE product SET listing = ? WHERE product_id = ?", listing,
+    `UPDATE product SET imageName = ? WHERE id = ?`,
+    [product.imageName, product.id],
+    (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+
+      if (res.affectedRows == 0) {
+        // not found Product with the id
+        result({
+          "status": "not_found"
+        }, null);
+        return;
+      }
+
+      result(null, product.id);
+    }
+  );
+};
+
+Product.setListing = (id, listing, result) => {
+  connection.query(
+    "UPDATE product SET listed = ? WHERE id = ?", [listing, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -119,14 +177,7 @@ Product.setListing = (id, product, listing, result) => {
         return;
       }
 
-      console.log("updated product: ", {
-        id: id,
-        product
-      });
-      result(null, {
-        id: id,
-        product
-      });
+      result(null, res);
     }
   );
 };

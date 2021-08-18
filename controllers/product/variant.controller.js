@@ -34,6 +34,39 @@ exports.create = (variant, id) => {
   return Promise.all(promises);
 }
 
+exports.updateById = (variant, id) => {
+
+  if (!variant) {
+    return new Promise((resolve, reject) => {
+      reject('Empty content.')
+    })
+  };
+
+  let promises = [];
+
+  variant.forEach(variants => {
+    promises.push(new Promise((resolve, reject) => {
+
+      // Create a Variant
+      const variant = new Variant({
+        name: variants.name,
+        id: variants.id,
+        product_id: id,
+        quantity: variants.quantity,
+        imageField: variants.imageField
+      });
+
+      // Save Variant in the database
+      Variant.updateById(variant, (err, data) => {
+        if (err) reject(err)
+        else resolve(data);
+      });
+    }))
+  });
+
+  return Promise.all(promises);
+}
+
 exports.findById = (variantIds) => {
   let promises = [];
   variantIds.forEach(variantId => {
@@ -65,4 +98,18 @@ exports.findByProductId = (productId) => {
         } else resolve(data);
       });
     })
+};
+
+exports.deleteById = (id) => {
+  return new Promise((resolve, reject) => {
+    Variant.deleteById(id, (err, data) => {
+      if (err) {
+        if (err.status === "not_found") {
+          resolve()
+        } else {
+          reject(err)
+        }
+      } else resolve(data);
+    });
+  })
 };

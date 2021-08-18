@@ -8,7 +8,7 @@ exports.create = (req) => {
             reject("Empty content.")
         }
         // Create a Product
-        const product = new Product({
+        let product = new Product({
             id: uuidv4(),
             quantity: req.quantity,
             brand: req.brand,
@@ -17,7 +17,9 @@ exports.create = (req) => {
             category: req.category,
             subcategory: req.subcategory,
             promotion: req.promotion,
-            hasVariant: req.hasVariant
+            hasVariant: req.hasVariant,
+            imageName: req.imageName,
+            name: req.name
         });
 
         // Save Product in the database
@@ -49,5 +51,76 @@ exports.findOne = (req, res) => {
                 } else reject(err)
             } else resolve(data)
         });
+    })
+};
+
+exports.update = (req) => {
+
+    return new Promise((resolve, reject) => {
+        if (!req) {
+            reject("Empty content.")
+        }
+        // Create a Product
+        let product = new Product({
+            id: req.id,
+            name: req.name,
+            quantity: req.quantity,
+            brand: req.brand,
+            description: req.description,
+            price: req.price,
+            category: req.category,
+            subcategory: req.subcategory,
+            promotion: req.promotion,
+            hasVariant: req.hasVariant,
+        });
+
+        // Save Product in the database
+        Product.updateById(product, (err, data) => {
+            if (err) reject(err)
+            else resolve(data)
+        })
+    })
+};
+
+exports.imageUpdate = (req) => {
+
+    return new Promise((resolve, reject) => {
+        if (!req) {
+            reject("Empty content.")
+        }
+        // Create a Product
+        let product = new Product({
+            id: req.id,
+            name: req.name,
+            quantity: req.quantity,
+            brand: req.brand,
+            description: req.description,
+            price: req.price,
+            category: req.category,
+            subcategory: req.subcategory,
+            promotion: req.promotion,
+            hasVariant: req.hasVariant,
+            imageName: req.imageName
+        });
+
+        // Save Product in the database
+        Product.updateImageById(product, (err, data) => {
+            if (err) reject(err)
+            else resolve(data)
+        })
+    })
+};
+
+exports.setListing = (id, listing) => {
+
+    return new Promise((resolve, reject) => {
+        if (!id || !listing) {
+            resolve("Empty content.")
+        }
+
+        Product.setListing(id, listing, (err, data) => {
+            if (err) reject(err)
+            else resolve(data)
+        })
     })
 };

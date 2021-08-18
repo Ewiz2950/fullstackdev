@@ -2,7 +2,7 @@
     <div class="vh-100 overflow-auto" style="padding-top: 3.5rem;">
         <div class="row m-0">
             <h1 class="col-11">Products</h1>
-            <a class="btn btn-success ms-auto h-50 col-1" href="" style="margin-top:0.55rem"><i
+            <a class="btn btn-success ms-auto h-50 col-1" href="/staff/product/add" method="GET" style="margin-top:0.55rem"><i
                     class="bi bi-plus-circle mr-2"></i> Add</a>
         </div>
         <form class="form-inline mt-md-0 input-group mb-2" action="" name='q' id="search" novalidate>
@@ -28,11 +28,11 @@
                 </thead>
                 <tbody>
                     {{#each products}}
-                    <tr class="table">
+                    <tr class="table {{#unless listed}}table-secondary{{/unless}}">
                         <th scope="row" class="text-center">
-                            <img src="/uploads/{{{variants.[0].images.[0].imageName}}}" style="width:90px;height:110px">
+                            <img src="/uploads/{{{imageName}}}" style="width:90px;height:110px">
                         </th>
-                        <td>{{{variants.[0].name}}}</td>
+                        <td>{{{name}}}</td>
                         <td>{{{brand}}}</td>
                         <td>{{{price}}}</td>
                         <td>{{{category}}}</td>
@@ -40,8 +40,14 @@
                         <td>
                             <ul>
                                 <li class="list-unstyled text-center mt-3">
-                                    <a class="btn btn-sm btn-danger list" href=""><i
-                                            class="bi bi-archive-fill mr-2"></i> Unlist</a>
+                                    {{#if listed}}
+                                    <a class="btn btn-sm btn-danger list" href="/staff/product/unlist/{{{id}}}"><i
+                                            class="bi bi-archive-fill mr-2"></i> Unlist</a> 
+                                    {{/if}}
+                                    {{#unless listed}}
+                                    <a class="btn btn-sm btn-danger list" href="/staff/product/relist/{{{id}}}"><i class="bi bi-arrow-clockwise mr-2"></i>Relist</a>
+                                    {{/unless}}
+                                     <a class="btn btn-sm btn-warning mr-2" href="/staff/product/update/{{{id}}}"><i class="bi bi-pencil-fill mr-2"></i> Update</a>
                                 </li>
                             </ul>
                         </td>

@@ -33,7 +33,22 @@ Image.findByVariantId = (variantId, result) => {
       return;
     }
 
-    // not found Variant with the id
+    result({ status: "not_found" }, null);
+  });
+};
+
+Image.deleteByVariantId = (variantId, result) => {
+  connection.query(
+    "DELETE FROM image WHERE variant_id = ?", variantId,
+    (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    result(null, variantId);
+
     result({ status: "not_found" }, null);
   });
 };

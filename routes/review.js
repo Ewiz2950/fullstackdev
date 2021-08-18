@@ -24,7 +24,6 @@ connection.connect(function(err) {
     });
 });
 
-
 // register Page
 router.get('/', function (req, res, next) {
     var data = {

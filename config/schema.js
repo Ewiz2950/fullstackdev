@@ -8,7 +8,9 @@ let Product = `CREATE TABLE IF NOT EXISTS product (
                   subcategory VARCHAR (15) NOT NULL,
                   promotion VARCHAR (20) NOT NULL,
                   hasVariant BOOL NOT NULL,
-                  listed BOOL DEFAULT true NOT NULL
+                  listed BOOL DEFAULT true NOT NULL,
+                  imageName VARCHAR(50) NOT NULL,
+                  name VARCHAR(100) NOT NULL
                )`;
 
 let Variant = `CREATE TABLE IF NOT EXISTS variant (

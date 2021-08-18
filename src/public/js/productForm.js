@@ -14,7 +14,7 @@ function showImages(className, id) {
     if (upload.files && upload.files.length <= 3) {
         var inputLabels = document.querySelectorAll(".custom-file-upload." + className);
         for (var i = 0; i < inputLabels.length; i++) {
-            inputLabels[i].style.background = "url('../../images/addimage.jpg')";
+            inputLabels[i].style.background = "url('../../../images/addimage.jpg')";
             inputLabels[i].style.backgroundSize = "100% 100%"
         }
 
@@ -34,7 +34,7 @@ function showImages(className, id) {
             }
         } else {
             for (var i = 0; i < inputLabels.length; i++) {
-                inputLabels[i].style.background = "url('../images/addimage.jpg')";
+                inputLabels[i].style.background = "url('../../../images/addimage.jpg')";
                 inputLabels[i].style.backgroundSize = "100% 100%"
             }
         }
@@ -43,9 +43,12 @@ function showImages(className, id) {
     }
 }
 
-document.getElementById('variantImage0').addEventListener('change', function () {
-    showImages("variantImageUpload0", "variantImage0")
-});
+var elementExists = document.getElementById("variantImage0");
+if (elementExists) {
+    elementExists.addEventListener('change', function () {
+        showImages("variantImageUpload0", "variantImage0")
+    });
+}
 
 function subcategories() {
     var subCategorySelect = document.getElementById('subcategory');
@@ -60,6 +63,19 @@ function subcategories() {
 }
 
 function addSum() {
+    let sum = 0;
+    let variantQuantityList = document.querySelectorAll('.variantQuantity');
+    if (variantQuantityList.length != 0) {
+        variantQuantityList.forEach(element => {
+            if (element.value == '') {
+                sum += 0
+            } else {
+                sum += parseInt(element.value)
+            };
+        })
+        document.getElementById('productQuantity').value = sum;
+    }
+    
     let inputQuantityList = document.querySelectorAll('.inputQuantity');
     inputQuantityList.forEach(element => {
         element.addEventListener('change', function () {
@@ -151,10 +167,8 @@ function addVariant(number) {
         document.getElementById("variant" + number).remove();
     });
 
-    addSum()
+    addSum();
 }
-
-addSum();
 
 document.addEventListener('DOMContentLoaded', function () {
     subcategories()
@@ -168,4 +182,34 @@ document.getElementById('addVariant').addEventListener('click', function (event)
     event.preventDefault();
     number += 1;
     addVariant(number);
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    addSum();
+
+    document.getElementById("mainImage").onchange = function() {
+        var reader = new FileReader();
+    
+        reader.onload = function (e) {
+            document.getElementById("mainLabel").style.background = 'url("' + e.target.result + '")';
+            document.getElementById("mainLabel").style.backgroundSize = "100% 100%";
+        };
+    
+        reader.readAsDataURL(this.files[0]);
+    }
+
+    let currentVariants = document.querySelectorAll('.currentVariant');
+    currentVariants.forEach(v => {
+        v.addEventListener('click', function (event) {
+            event.preventDefault();
+            document.getElementById(event.target.id).remove();
+        });
+    })
+
+    let currentImages = document.querySelectorAll('.currentImage');
+    currentImages.forEach(v => {
+        v.addEventListener('change', function (event) {
+            showImages(event.target.className.split(" ")[0], event.target.id);
+        });
+    })
 });

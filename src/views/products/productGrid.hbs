@@ -23,7 +23,7 @@
                   <ul class="p-0 list-unstyled brands">
                     {{#each products}}
                     {{#if listed}}
-                    <li><input name="brand" type='checkbox' value="{{{brand}}}" /> {{{brand}}}</li>
+                    <li><input name="brand" type='radio' value="{{{brand}}}" /> {{{brand}}}</li>
                     {{/if}}
                     {{/each}}
                   </ul>
@@ -33,10 +33,10 @@
                 <p class="head">Promotion</p>
                 <div class='filter rounded'>
                   <ul class="p-0 list-unstyled">
-                    <li><input name="promotion" type='checkbox' value="F" /> Featured</li>
-                    <li><input name="promotion" type='checkbox' value="NA" /> New Arrival</li>
-                    <li><input name="promotion" type='checkbox' value="BS" /> Best Seller</li>
-                    <li><input name="promotion" type='checkbox' value="PP" /> Popular Product</li>
+                    <li><input name="promotion" type='radio' value="Featured" /> Featured</li>
+                    <li><input name="promotion" type='radio' value="New Arrival" /> New Arrival</li>
+                    <li><input name="promotion" type='radio' value="Best Seller" /> Best Seller</li>
+                    <li><input name="promotion" type='radio' value="Popular Product" /> Popular Product</li>
                   </ul>
                 </div>
               </div>
@@ -53,16 +53,16 @@
             <h4>Results for '{{{search}}}'</h4>
             {{/if}}
           </div>
-          <div class="row g-0 row-cols-2 row-cols-xs-1 row-cols-md-3 row-cols-lg-4">
+          <div class="row g-0 row-cols-2 row-cols-xs-1 row-cols-md-3 row-cols-lg-4" id="productSection">
             {{#each products}}
             {{#if listed}}
             <div class="product-card col">
               <a href="/product/{{{id}}}" class="text-dark">
                 <div class="card border-0">
-                  <div class="productImage"><img class="card-img-top p-4" src="/uploads/{{{variants.[0].images.[0].imageName}}}" alt="Product Image"></img></div>
+                  <div class="productImage"><img class="card-img-top p-4" src="/uploads/{{{imageName}}}" alt="Product Image"></img></div>
                   <div class="card-body">
                     <p class="card-title p m-0">{{{brand}}}</p>
-                    <p class="card-text mb-0">{{{variants.[0].name}}}</p>
+                    <p class="card-text mb-0">{{{name}}}</p>
                     <p class="card-text py-4">${{{price}}}</p>
                     {{#if hasVariant}}
                     <a href="/product/{{{id}}}" class="btn btn-primary"><i class="bi bi-list-ul"></i> Select variant</a>
@@ -81,8 +81,79 @@
     </div>
 </main>
 <script>
+  function update() {
+      var filters = {};
+      filters.sort = document.getElementById("sort").value;
+      document.querySelectorAll("input[type='radio'][name='promotion']").forEach(c => {
+        if (c.checked) {
+          filters.promotion = c.value;
+        }
+      })
+      document.querySelectorAll("input[type='radio'][name='brand']").forEach(c => {
+        if (c.checked) {
+          filters.brand = c.value
+        }
+      })
+      if (new URLSearchParams(window.location.search).get('q') != null) {
+        filters.search = new URLSearchParams(window.location.search).get('q');
+      }
+      fetch("http://localhost:5000/search/products", {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          method: "POST",
+          body: JSON.stringify(filters)
+      })
+      .then(response => response.json())
+      .then(response => {
+        document.getElementById("productSection").innerHTML = "";
+        var products = "";
+        response.forEach(product => {
+          if (product.listed) {
+            products += `
+            <div class="product-card col">
+              <a href="/product/${product.id}" class="text-dark">
+                <div class="card border-0">
+                  <div class="productImage"><img class="card-img-top p-4" src="/uploads/${product.imageName}" alt="Product Image"></img></div>
+                  <div class="card-body">
+                    <p class="card-title p m-0">${product.brand}</p>
+                    <p class="card-text mb-0">${product.name}</p>
+                    <p class="card-text py-4">$${product.price}</p>
+          `
+          if (product.hasVariant) {
+            products += `
+            <a href="/product/${product.id}" class="btn btn-primary"><i class="bi bi-list-ul"></i> Select variant</a>
+            </div>
+                </div>
+              </a>
+            </div>
+            `
+          } else {
+            products += `
+            <a href="" class="btn btn-primary"><i class="bi bi-cart-plus"></i> Add to cart</a>
+            </div>
+                </div>
+              </a>
+            </div>
+            `
+          }
+          }
+        })
+        document.getElementById("productSection").innerHTML = products;
+      });
+    }
+
   document.addEventListener('DOMContentLoaded', function() {
+    update();
     var filterToggle = document.getElementsByClassName("filter-toggle")[0];
     filterToggle.classList.remove("d-none");
+
+    var radio = document.querySelectorAll("input[type='radio']");
+    var sort = document.getElementById("sort");
+    radio.forEach(c => {
+      c.addEventListener("click", update);
+    })
+    sort.addEventListener("change", update);
   });
 </script>
