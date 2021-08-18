@@ -113,6 +113,7 @@ function addVariant(number) {
     input.setAttribute("class", "form-control mb-3 imageUpload" + number);
     input.setAttribute("id", "variantName" + number);
     input.setAttribute("name", `variant[${number}][name]`);
+    input.setAttribute("required", "");
     var hidden = document.createElement('input');
     hidden.setAttribute("type", "hidden");
     hidden.setAttribute("name", `variant[${number}][imageField]`);
@@ -132,6 +133,7 @@ function addVariant(number) {
     inputQuantity.setAttribute("type", "number");
     inputQuantity.setAttribute("min", 1);
     inputQuantity.setAttribute("step", 1);
+    inputQuantity.setAttribute("required", "");
     inputQuantity.setAttribute("class", "form-control mb-3 inputQuantity variantQuantity");
     inputQuantity.setAttribute("id", "variantQuantity" + number);
     inputQuantity.setAttribute("name", `variant[${number}][quantity]`);
