@@ -25,13 +25,18 @@ var upload = multer({
 });
 
 router.get('/product', function (req, res, next) {
+  let filters = {};
+  if (req.query.q) {
+    filters.search = req.query.q;
+  }
+
   fetch("http://localhost:5000/search/products", {
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     },
     method: "POST",
-    body: JSON.stringify({})
+    body: JSON.stringify(filters)
   })
   .then(response => response.json())
   .then(response => {
